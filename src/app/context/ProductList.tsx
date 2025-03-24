@@ -16,9 +16,15 @@ const ProductList = () => {
 
     console.log(products[1]);
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="list_product grid grid-cols-5 gap-4">
       {products.map((product) => (
-        <Card key={product.id} title={product.title} price={product.price} image={product.image} description={product.description}/>
+        <Card key={product.id} title={product.title} 
+                price={product.price} image={product.image} 
+                description={product.description}
+                rating={product.rating}
+                category={product.category}
+        />
+
       ))}
       
     </div>
