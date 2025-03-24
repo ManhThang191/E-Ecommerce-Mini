@@ -1,0 +1,11 @@
+
+.btn_favorite{
+    color: red;
+
+}
+
+.btn_favorite:hover{
+    color: rgb(254, 254, 254) !important;
+    background: #ec6f6f !important;
+}
+
