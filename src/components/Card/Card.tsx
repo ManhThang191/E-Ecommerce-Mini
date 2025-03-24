@@ -1,40 +1,40 @@
 "use client";
 import React from 'react'
 import Image from 'next/image'
-import logo from '@/app/Public/logo.png'
+
 // import 'antd/dist/antd.css'
 import './Card.css'
 import { Button } from 'antd'
-import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
 
-function Card({id ,title, price, image,description, category, favor : boolean, inCart }) {
+function Card({ id, title, price, image, description, category, favor: boolean, inCart, rating }) {
     return (
-        <div className='card' 
+        <div className='card'
             style={{
-            objectFit: 'cover',
-            width: '240px',
-            height: 'auto',
-            border: '1px solid #ccc',
-            borderRadius: '10px',
-            padding: '10px',
-            margin: '5px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            cursor: 'pointer',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Added box shadow for light shadow effect
-        }}>
-            <Image src={image} alt={title} width={0} height={0}
-            className='card_img'
-                style={{
-                width: '60%',
+                objectFit: 'cover',
+                width: '240px',
                 height: 'auto',
-                margin: 'auto',
+                border: '1px solid #ccc',
                 borderRadius: '10px',
-                // cover: 'fit',
-                
-            }} 
-            loader={({ src }) => src} // Use loader to handle image URL from API
+                padding: '10px',
+                margin: '5px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Added box shadow for light shadow effect
+            }}>
+            <Image src={image} alt={title} width={0} height={0}
+                className='card_img'
+                style={{
+                    width: '60%',
+                    height: 'auto',
+                    margin: 'auto',
+                    borderRadius: '10px',
+                    // cover: 'fit',
+
+                }}
+                loader={({ src }) => src} // Use loader to handle image URL from API
             />
             <div style={{
                 display: 'flex',
@@ -51,12 +51,29 @@ function Card({id ,title, price, image,description, category, favor : boolean, i
                     {/* Dien Thoai Xiaomi Redmin 13 */}
                     {title}
                 </h2>
-                <h1 style={{
-                    color: 'red',
-                    fontSize: '20px'
+
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '10px',
                 }}>
-                    {price} $
-                </h1>
+                    <h1 style={{
+                        color: 'red',
+                        fontSize: '20px',
+                    }}>
+                        {price} $
+                    </h1>
+                    <h1 style={{
+                        display: 'flex',
+                        gap: '5px',
+                        fontSize: '16px',
+                        color: 'orange',
+                    }}>
+                        {rating.rate} <StarOutlined />
+                    </h1>
+                </div>
+                
                 <span style={{
                     overflow: 'hidden',
                     fontSize: '12px',
@@ -74,13 +91,13 @@ function Card({id ,title, price, image,description, category, favor : boolean, i
                     gap: '5px',
                     margin: '10px 0 10px 0',
                 }}>
-                    <Button 
+                    <Button
                         className='btn_buy'
-                        style={{ 
-                        flex: 2,
-                        background: 'var(--color-cyan-700)',
-                        color: 'white',
-                    }}>
+                        style={{
+                            flex: 2,
+                            background: 'var(--color-cyan-700)',
+                            color: 'white',
+                        }}>
                         Mua Ngay
                     </Button>
                     <Button style={{ flex: 1 }}>
@@ -88,8 +105,8 @@ function Card({id ,title, price, image,description, category, favor : boolean, i
                     </Button>
                     <Button style={{ flex: 1 }}
                         className='btn_favorite'
-                        // onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "pink")}
-                        // onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "inherit")}
+                    // onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "pink")}
+                    // onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "inherit")}
                     >
                         <HeartOutlined />
                     </Button>
