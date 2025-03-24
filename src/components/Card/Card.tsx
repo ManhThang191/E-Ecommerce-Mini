@@ -1,6 +1,9 @@
+"use client";
 import React from 'react'
 import Image from 'next/image'
 import logo from '@/app/Public/logo.png'
+// import 'antd/dist/antd.css'
+import './Card.css'
 import { Button } from 'antd'
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 
@@ -18,7 +21,7 @@ function Card() {
             flexDirection: 'column',
             justifyContent: 'space-between',
             cursor: 'pointer',
-            // alignItems: 'center'
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Added box shadow for light shadow effect
         }}>
             <Image src={logo} alt="Logo"
                 style={{
@@ -30,7 +33,6 @@ function Card() {
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
-                // alignItems: 'flex-start'
                 borderRadius: '10px',
             }}>
                 <h2 style={{
@@ -38,7 +40,10 @@ function Card() {
                     maxHeight: '65px',
                     overflow: 'hidden',
                     font: 'bold 16px/1.5 sans-serif',
-                }}>Dien Thoai Xiaomi Redmin 13</h2>
+                    // background: 'var(--color-cyan-700)',       
+                }}>
+                    Dien Thoai Xiaomi Redmin 13
+                </h2>
                 <h1 style={{
                     color: 'red',
                     fontSize: '20px'
@@ -48,7 +53,6 @@ function Card() {
                 <span style={{
                     overflow: 'hidden',
                     fontSize: '12px',
-                    // textOverflow: 'ellipsis',
                     background: '#f1f1f1',
                     margin: '10px 0 10px 0',
                     borderRadius: '5px',
@@ -63,13 +67,21 @@ function Card() {
                     gap: '5px',
                     margin: '10px 0 10px 0',
                 }}>
-                    <Button style={{ flex: 2 }}>
+                    <Button style={{ 
+                        flex: 2,
+                        background: 'var(--color-cyan-700)',
+                        color: 'white',
+                    }}>
                         Mua Ngay
                     </Button>
                     <Button style={{ flex: 1 }}>
                         <ShoppingCartOutlined />
                     </Button>
-                    <Button style={{ flex: 1 }}>
+                    <Button style={{ flex: 1 }}
+                        className='btn_favorite'
+                        // onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "pink")}
+                        // onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "inherit")}
+                    >
                         <HeartOutlined />
                     </Button>
                 </div>
