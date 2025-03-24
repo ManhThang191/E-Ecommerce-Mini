@@ -7,9 +7,10 @@ import './Card.css'
 import { Button } from 'antd'
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 
-function Card() {
+function Card({id ,title, price, image,description, category, favor : boolean, inCart }) {
     return (
-        <div style={{
+        <div className='card' 
+            style={{
             objectFit: 'cover',
             width: '240px',
             height: 'auto',
@@ -23,13 +24,18 @@ function Card() {
             cursor: 'pointer',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Added box shadow for light shadow effect
         }}>
-            <Image src={logo} alt="Logo"
+            <Image src={image} alt={title} width={0} height={0}
+            className='card_img'
                 style={{
-                    width: '90%',
-                    height: 'auto',
-                    margin: 'auto',
-                    borderRadius: '10px',
-                }} />
+                width: '60%',
+                height: 'auto',
+                margin: 'auto',
+                borderRadius: '10px',
+                // cover: 'fit',
+                
+            }} 
+            loader={({ src }) => src} // Use loader to handle image URL from API
+            />
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -42,13 +48,14 @@ function Card() {
                     font: 'bold 16px/1.5 sans-serif',
                     // background: 'var(--color-cyan-700)',       
                 }}>
-                    Dien Thoai Xiaomi Redmin 13
+                    {/* Dien Thoai Xiaomi Redmin 13 */}
+                    {title}
                 </h2>
                 <h1 style={{
                     color: 'red',
                     fontSize: '20px'
                 }}>
-                    Price
+                    {price} $
                 </h1>
                 <span style={{
                     overflow: 'hidden',
@@ -59,7 +66,7 @@ function Card() {
                     padding: '5px',
                     maxHeight: '60px',
                 }}>
-                    lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam
+                    {description}
                 </span>
                 <div style={{
                     display: 'flex',
@@ -67,7 +74,9 @@ function Card() {
                     gap: '5px',
                     margin: '10px 0 10px 0',
                 }}>
-                    <Button style={{ 
+                    <Button 
+                        className='btn_buy'
+                        style={{ 
                         flex: 2,
                         background: 'var(--color-cyan-700)',
                         color: 'white',
