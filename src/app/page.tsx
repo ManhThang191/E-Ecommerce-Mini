@@ -5,9 +5,8 @@ import ProductList from "./context/ProductList";
 export default function Home() {
   return (
     <div className="min-h-screen w-full">
-      <Sidebar/>
-      <div className="w-full flex justify-center mt-40">
-        <div className="pb-30">
+      <div className="w-full flex justify-center">
+        <div className="pb-20">
           <ProductList />        
         </div>
       </div>
