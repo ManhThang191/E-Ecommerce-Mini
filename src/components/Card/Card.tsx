@@ -1,122 +1,66 @@
 "use client";
 import React from 'react'
 import Image from 'next/image'
-
 // import 'antd/dist/antd.css'
-import './Card.css'
 import { Button } from 'antd'
 import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
-
 import Link from 'next/link';
 
-function Card({ id, title, price, image, description, category, favor: boolean, inCart, rating }) {
+interface CardProps {
+    id: number;
+    title: string;
+    price: number;
+    image: string;
+    description: string;
+    category: string;
+    favor: boolean;
+    inCart: boolean;
+    rating: {
+        rate: number;
+        count: number;
+    };
+}
+
+function Card({ id, title, price, image, description, category, favor, inCart, rating }: CardProps) {
 
     return (
-        <Link href={`/Detail/${id}`}
-            style={{
-                height: 'auto'
-            }}
-        >    
-            <div className='card'
 
-                style={{
-                    objectFit: 'cover',
-                    width: '240px',
-                    height: '100%',
-                    border: '1px solid #ccc',
-                    borderRadius: '10px',
-                    padding: '10px',
-                    margin: '5px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Added box shadow for light shadow effect
-                }}>
+        <Link href={`/Detail/${id}`} className="h-auto hover:transform hover:scale-105 duration-300">
+            <div className="card object-cover w-60 h-full border border-gray-300
+                 rounded-lg p-2.5 m-1.5 flex flex-col justify-between cursor-pointer shadow-lg">
                 <Image src={image} alt={title} width={0} height={0}
-                    className='card_img'
-                    style={{
-                        width: '60%',
-                        height: 'auto',
-                        margin: 'auto',
-                        borderRadius: '10px',
-                        objectFit: 'cover',
-
-                    }}
-                    loader={({ src }) => src} // Use loader to handle image URL from API
+                    className="card_img w-3/5 h-auto m-auto rounded-lg object-cover"
+                    loader={({ src }) => src}
                 />
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    borderRadius: '10px',
-                    }}>
-                    <h2 style={{
-                        margin: '10px 0 10px 0',
-                        maxHeight: '65px',
-                        overflow: 'hidden',
-                        font: 'bold 16px/1.5 sans-serif',
-                        // background: 'var(--color-cyan-700)',       
-                    }}>
-                        {/* Dien Thoai Xiaomi Redmin 13 */}
+                <div className="flex flex-col rounded-lg">
+                    <h2 className="my-2.5 max-h-17 overflow-hidden font-bold text-base leading-6 ">
                         {title}
                     </h2>
-
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '10px',
-                    }}>
-                        <h1 style={{
-                            color: 'red',
-                            fontSize: '20px',
-                        }}>
+                    <div className="flex justify-between items-center mb-2.5">
+                        <h1 className="text-red-500 text-xl hover:transform hover:scale-110">
                             {price} $
                         </h1>
-                        <h1 style={{
-                            display: 'flex',
-                            gap: '5px',
-                            fontSize: '16px',
-                            color: 'orange',
-                        }}>
+                        <h1 className="flex gap-1.5 text-lg text-orange-500">
                             {rating.rate} <StarOutlined />
                         </h1>
                     </div>
-
-                    <span style={{
-                        overflow: 'hidden',
-                        fontSize: '12px',
-                        background: '#f1f1f1',
-                        margin: '10px 0 10px 0',
-                        borderRadius: '5px',
-                        padding: '5px',
-                        maxHeight: '60px',
-                    }}>
+                    <span className="overflow-hidden text-xs bg-gray-200 my-2.5 rounded-md p-1.5 max-h-15">
                         {description}
                     </span>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        gap: '5px',
-                        margin: '10px 0 10px 0',
-                    }}>
-                        <Button
-                            className='btn_buy'
-                            style={{
-                                flex: 2,
-                                background: 'var(--color-cyan-700)',
-                                color: 'white',
-                            }}>
+                    <div className="flex justify-between gap-1.5 my-2.5">
+                        <Button className=" flex-2 !bg-cyan-700 !text-white 
+                                         hover:bg-cyan-800 rounded-lg
+                                        hover:transform hover:scale-105  hover:!text-amber-200
+                        ">
                             Mua Ngay
                         </Button>
-                        <Button style={{ flex: 1 }}>
+                        <Button className="flex-1 hover:transform hover:!scale-110 hover:!border-none hover:!bg-green-200 hover:!text-black ">
                             <ShoppingCartOutlined />
                         </Button>
-                        <Button style={{ flex: 1 }}
-                            className='btn_favorite'
-                        // onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "pink")}
-                        // onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "inherit")}
-                        >
+                        <Button className="flex-1 btn_favorite !text-pink-600 hover:!text-white
+                                     hover:!bg-pink-600 hover:!border-none
+                                     hover:transform hover:scale-105
+                        ">
                             <HeartOutlined />
                         </Button>
                     </div>
