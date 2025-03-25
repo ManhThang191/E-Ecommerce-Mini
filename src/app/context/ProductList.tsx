@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Card from "@/components/Card/Card";
 import DetailPage from "@/components/DetailPage/DetailPage";
 import axios from 'axios';
+// import { useSearchParams } from "react-router-dom";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -14,6 +15,8 @@ const ProductList = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  console.log(products)
+
   return (
     <>
       <DetailPage name = {'Sản Phẩm'} />
@@ -24,8 +27,11 @@ const ProductList = () => {
             description={product.description}
             rating={product.rating}
             category={product.category}
+            
           />
         ))}
+
+        
       </div>
     </>
   );
