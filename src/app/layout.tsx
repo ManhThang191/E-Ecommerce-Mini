@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/sidebar/Sidebar";
+
+import { DataProvider } from './context/DataContext'
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,13 +28,16 @@ export default function RootLayout({
   children: React.ReactNode; // Define the type for children prop
 }>) {
   return (
-    <html lang="en"> 
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`} // Apply custom fonts and antialiasing
       >
-        <Sidebar />
-        {children} {/* Render the children components */}
+        <DataProvider>
+          <Sidebar />
+          {children} {/* Render the children components */}
+        </DataProvider>
       </body>
-    </html>
+
+    </html >
   );
 }

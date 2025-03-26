@@ -1,43 +1,50 @@
 import React from 'react'
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import CardDetail from '@/components/CardDetail/CardDetail';
-
+import { useParams } from 'next/navigation';
+import { useData } from '@/app/context/DataContext';
 
 function ShowDetail() {
 
-    const { id } = useParams();
-    const productID = parseInt(id, 10);
+    interface product {
+        id: number;
+        title: string;
+        price: number;
+        image: string;
+        description: string;
+        rating: number;
+        category: string;
+    }
 
-    const [products, setProducts] = useState([]);
-    const urlAPI = 'https://fakestoreapi.com/products';
+    console.log(useParams());
 
-    useEffect(() => {
-        axios.get(urlAPI)
-            .then((response) => setProducts(response.data))
-            .catch((error) => console.error("Error fetching data:", error));
-    }, []);
+    const id: string = useParams().id as string;
+    const { state }: { state: { data: product[] } } = useData();
+    const ProductDetail = state.data;
 
-    // const productDetail = products.find((product) => product.id === productID);
+    const products = ProductDetail.find((item: product) => item.id === parseInt(id));
 
-  return (
-    <>
-        {products.find((product) => product.id === productID) ? (
+    if (!products) {
+        return <div>Product not found</div>;
+    }
+
+    console.log(products)
+    
+
+    return (
+        <>
             <CardDetail
                 id={products.id}
                 title={products.title}
-                price={product.price}
-                image={product.image}
-                description={product.description}
-                category={product.category}
-                rating={product.rating}
+                description={products.description}
+                price={products.price}
+                category={products.category}
+                rating={products.rating || 0}
+                image={products.image || ""}
             />
-        ) : (
-            <p>Product not found</p>
-        )}
-    </>
-  )
+        </>
+    )
 }
 
 export default ShowDetail

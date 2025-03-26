@@ -1,8 +1,16 @@
 import React from 'react'
+import ShowCartList from '../CartProduct/ShowCartList'
+
+
+
 
 function page() {
   return (
-    <div>page Cart Product</div>
+    <>
+    <div className=''>
+        <ShowCartList/>
+    </div>
+    </>
   )
 }
 
