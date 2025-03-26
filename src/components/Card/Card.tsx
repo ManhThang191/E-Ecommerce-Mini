@@ -12,16 +12,13 @@ interface CardProps {
     price: number;
     image: string;
     description: string;
-    category: string;
-    favor: boolean;
-    inCart: boolean;
     rating: {
         rate: number;
         count: number;
     };
 }
 
-function Card({ id, title, price, image, description, category, favor, inCart, rating }: CardProps) {
+function Card({ id, title, price, image, description, rating }: CardProps) {
 
     return (
 
@@ -57,7 +54,7 @@ function Card({ id, title, price, image, description, category, favor, inCart, r
                         <Button className="flex-1 hover:transform hover:!scale-110 hover:!border-none hover:!bg-green-200 hover:!text-black ">
                             <ShoppingCartOutlined />
                         </Button>
-                        <Button className="flex-1 btn_favorite !text-pink-600 hover:!text-white
+                        <Button className="flex-1  !text-pink-600 hover:!text-white
                                      hover:!bg-pink-600 hover:!border-none
                                      hover:transform hover:scale-105
                         ">
