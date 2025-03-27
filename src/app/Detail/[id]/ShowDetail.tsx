@@ -17,7 +17,7 @@ function ShowDetail() {
         category: string;
     }
 
-    console.log(useParams());
+    // console.log(useParams());
 
     const id: string = useParams().id as string;
     const { state }: { state: { data: product[] } } = useData();
@@ -29,7 +29,7 @@ function ShowDetail() {
         return <div>Product not found</div>;
     }
 
-    console.log(products)
+    // console.log(products)
     
 
     return (

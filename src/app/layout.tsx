@@ -4,7 +4,7 @@ import "./globals.css";
 import Sidebar from "@/components/sidebar/Sidebar";
 
 import { DataProvider } from './context/DataContext'
-
+import { CartProvider } from "./context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +32,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`} // Apply custom fonts and antialiasing
       >
+
         <DataProvider>
-          <Sidebar />
-          {children} {/* Render the children components */}
+          <CartProvider>
+            <Sidebar />
+            {children} {/* Render the children components */}
+          </CartProvider>
         </DataProvider>
       </body>
 

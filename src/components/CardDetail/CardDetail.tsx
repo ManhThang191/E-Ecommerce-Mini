@@ -6,7 +6,7 @@ import DetailPage from '@/components/DetailPage/DetailPage';
 import Image from 'next/image';
 import { Button } from 'antd';
 import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
-
+import { useCart } from '@/app/context/CartContext';
 
 
 interface CardProps {
@@ -24,7 +24,20 @@ interface CardProps {
 }
 
 
-function CardDetail({ title, price, image, description, category, rating: { rate , count } }: CardProps) {
+function CardDetail({ id, title, price, image, description, category, rating: { rate , count } }: CardProps) {
+
+
+    const { state, dispatch } = useCart()
+    
+    const handleAddToCart = (productID: number) => {
+
+        dispatch({
+            type: "ADD_PRODUCT",
+            payload: {image:image,category: category, id: productID, name: title, price: price, quantity: 1 }
+        });
+
+        // console.log(typeof id)
+    }
 
     return (
         <>
@@ -79,7 +92,12 @@ function CardDetail({ title, price, image, description, category, rating: { rate
 
                         <Button className='flex-1 m-3 p-6 hover:transform hover:!scale-110 hover:!border-none
                                          hover:!bg-green-200 hover:!text-black text-lg !h-15'>
-                            <ShoppingCartOutlined className='text-2xl' />
+                            <ShoppingCartOutlined className='text-2xl' 
+                                onClick={() => {
+                                    handleAddToCart(id);
+
+                                }}
+                            />
                         </Button>
 
                         <Button className='flex-1 m-3 p-6 !text-pink-600 hover:!text-white

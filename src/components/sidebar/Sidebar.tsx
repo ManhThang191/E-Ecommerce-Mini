@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React from 'react'
 // import 'antd' from 'antd'
 import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined } from '@ant-design/icons'

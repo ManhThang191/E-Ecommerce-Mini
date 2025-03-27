@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 // import Sidebar from "@/components/sidebar/Sidebar";
 // import Card from "@/components/Card/Card";
 import ProductList from "./context/ProductList";
