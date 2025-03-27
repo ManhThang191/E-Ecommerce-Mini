@@ -15,7 +15,6 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
         <h1>
           {name}
         </h1>
-
         {address !== "Home" ? (
           <>
             <div className="ml-auto">
@@ -27,8 +26,6 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
             </div>
           </>
         ) : ("")}
-
-
       </div>
     </>
   )

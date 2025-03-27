@@ -1,4 +1,4 @@
-"use client";
+"use client"; //check
 import React,{} from 'react'
 // import DetailPage from '@/components/DetailPage/DetailPage'
 // import Card from '@/components/Card/Card'

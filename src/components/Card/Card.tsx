@@ -1,10 +1,11 @@
 "use client";
-import React from 'react'
+import React, { useContext } from 'react'
 import Image from 'next/image'
 // import 'antd/dist/antd.css'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
 import Link from 'next/link';
+import { useCart } from '@/app/context/CartContext';
 
 interface CardProps {
     id: number;
@@ -16,10 +17,27 @@ interface CardProps {
         rate: number;
         count: number;
     };
+    category :string;
 }
 
-function Card({ id, title, price, image, description, rating }: CardProps) {
+function Card({ id, title, price, image,category, description, rating }: CardProps) {
 
+    const { state, dispatch } = useCart();
+    console.log(state) 
+    const handleAddToCart = (productID: number) => {
+
+        dispatch({
+            type: "ADD_PRODUCT",
+            payload: {image:image,category: category, id: productID, name: title, price: price, quantity: 1 }
+        });
+
+        // console.log(typeof id)
+    }
+
+    const hanldeShowSucess = () =>{
+        message.success('aa',2);
+
+    }
     return (
 
         <Link href={`/Detail/${id}`} className="h-auto hover:transform hover:scale-105 duration-300">
@@ -45,19 +63,38 @@ function Card({ id, title, price, image, description, rating }: CardProps) {
                         {description}
                     </span>
                     <div className="flex justify-between gap-1.5 my-2.5">
-                        <Button className=" flex-2 !bg-cyan-700 !text-white 
+                        <Button className="flex-1 !bg-cyan-700 !text-white 
                                          hover:bg-cyan-800 rounded-lg
-                                        hover:transform hover:scale-105  hover:!text-amber-200
-                        ">
+                                         hover:transform hover:scale-105 hover:!text-amber-200
+                        "
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                
+                            }}
+                        >
                             Mua Ngay
                         </Button>
-                        <Button className="flex-1 hover:transform hover:!scale-110 hover:!border-none hover:!bg-green-200 hover:!text-black ">
-                            <ShoppingCartOutlined />
+                        <Button className="flex-1 hover:transform hover:!scale-110 hover:!border-none hover:!bg-green-200 hover:!text-black "
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleAddToCart(id);
+                            }}
+                        >
+                                
+                                <ShoppingCartOutlined />
                         </Button>
                         <Button className="flex-1  !text-pink-600 hover:!text-white
                                      hover:!bg-pink-600 hover:!border-none
                                      hover:transform hover:scale-105
-                        ">
+                        "
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+
+                            }}
+                        >
                             <HeartOutlined />
                         </Button>
                     </div>
