@@ -16,7 +16,7 @@ interface CartState {
 }
 
 interface CartAction {
-    type: 'ADD_PRODUCT' | 'REMOVE_PRODUCT' | 'CLEAR_CART';
+    type: 'ADD_PRODUCT' | 'REMOVE_PRODUCT' | 'CLEAR_CART' | 'PLUS_QUALITY' | 'MINUS_QUALITY';
     payload?: Product;
 }
 const savedCartProducts = localStorage.getItem('cartProducts');
@@ -65,7 +65,32 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         case 'CLEAR_CART':
             updatedProducts = [];
             break;
+            
+        case 'PLUS_QUALITY' :
+            if (action.payload) {
+                const existingProduct = state.products.find(product => product.id === action.payload!.id);
+                updatedProducts = existingProduct
+                    ? state.products.map(product =>
+                        product.id === action.payload!.id
+                            ? { ...product, quantity: product.quantity + action.payload!.quantity }
+                            : product
+                    )
+                    : [...state.products, { ...action.payload, quantity: action.payload.quantity }];
+            }
+            break;
 
+        case 'MINUS_QUALITY':
+            if (action.payload) {
+                const existingProduct = state.products.find(product => product.id === action.payload!.id);
+                updatedProducts = existingProduct
+                    ? state.products.map(product =>
+                        product.id === action.payload!.id
+                            ? { ...product, quantity: product.quantity - action.payload!.quantity }
+                            : product
+                    )
+                    : [...state.products, { ...action.payload, quantity: action.payload.quantity }];
+            }
+            break;
         default:
             updatedProducts = state.products;
             break;
