@@ -58,7 +58,7 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                     />
                 </div>
                 <div className='flex-1 flex-col w-full h-full '>
-                    <div className=' flex items-center justify-center text-2xl bg-cyan-800 text-amber-50' style={{ height: '20%' }}>{title}</div>
+                    <div className=' flex items-center justify-center p-5 text-xl bg-cyan-800 text-amber-50' style={{ height: '20%' }}>{title}</div>
                     <div className=' flex items-center justify-around text-3xl text-red-700' style={{ height: '20%' }}>
                         <div className=''>
                             Price : $ {price}

@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { Button } from 'antd'
 import { useCart } from '@/app/context/CartContext';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
+import Link from 'next/link';
 
 interface PropCartList {
     id: number,
@@ -19,11 +20,12 @@ interface PropCartList {
 
 function CartList({ id, image, title, price, category, quality }: PropCartList) {
 
+
     // const { state } = useCart()
     // console.log(state)
     // const ProductList = state.products
     // console.log(ProductList)
-    const total: number = price * quality;
+    const total: number = parseFloat((price * quality).toFixed(4));
     // console.log(typeof total)
     const { state, dispatch } = useCart()
 
@@ -36,7 +38,25 @@ function CartList({ id, image, title, price, category, quality }: PropCartList) 
 
         // console.log(typeof id)
     }
+    const hanldeUpQuality = (productID: number) => {
 
+        dispatch({
+            type: "PLUS_QUALITY",
+            payload: {image:image,category: category, id: productID, name: title, price: price, quantity: 1 }
+        });
+
+        // console.log(typeof id)
+    }
+
+    const hanldeDownQuality = (productID: number) => {
+
+        dispatch({
+            type: "MINUS_QUALITY",
+            payload: {image:image,category: category, id: productID, name: title, price: price, quantity: 1 }
+        });
+
+        // console.log(typeof id)
+    }
 
     return (
         <>
@@ -44,7 +64,6 @@ function CartList({ id, image, title, price, category, quality }: PropCartList) 
                             last:mb-8 mt-5 border border-gray-300 flex flex-wrap 
                             rounded-2xl text-center items-center p-4 shadow-lg ' 
             >
-
                 <div className='w-full flex flex-wrap sm:flex-nowrap justify-between items-center'>
                     <div className='w-full sm:w-1/6 flex justify-center mb-4 sm:mb-0'>
                         <Image
@@ -57,15 +76,32 @@ function CartList({ id, image, title, price, category, quality }: PropCartList) 
                             style={{ width: '50%', height: 'auto' }}
                         />
                     </div>
-                    <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center'>{title}</div>
-                    <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center'>{category}</div>
+                    <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center'>
+                        {title.length > 40 ? `${title.substring(0, 40)}...` : title}
+                    </div>
+                    <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center '>
+                        {category}
+                        <Link href={`/Detail/${id}`} className='flex  '>
+                            <span className='m-auto text-blue-700'>Xem chi tiết</span>
+                        </Link>
+                    </div>
                     <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center'>$ {price}</div>
                     <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center  scale-130'>
-                        <Button className='scale-70 hover:!text-black hover:!border-black'>
+
+                        <Button className={`scale-70 ${quality <= 1 ? '!cursor-not-allowed !text-gray-400 !border-none' : 'hover:!text-black hover:!border-black'}`}
+                            onClick={() => {
+                                hanldeDownQuality(id)
+                            }}
+                            disabled={quality <= 1}
+                        >
                             <MinusOutlined />
                         </Button>
-                        {quality}
-                        <Button className='scale-70 hover:!text-black hover:!border-black'>
+                        <span className='bg-amber-100 h-auto w-10 inline-block text-center rounded-md'>
+                            {quality}
+                        </span>
+                        <Button className='scale-70 hover:!text-black hover:!border-black'
+                            onClick={() => hanldeUpQuality(id)}
+                        >
                             <PlusOutlined />
                         </Button>
                     </div>
@@ -75,12 +111,19 @@ function CartList({ id, image, title, price, category, quality }: PropCartList) 
                     <div className='w-full sm:w-1/6 flex justify-center'>
                         <Button className='scale-110 hover:!border-none 
                                  hover:!bg-red-500 hover:!text-white
-                                 !border-red-500
+                                 !border-red-500 !text-red-500
                                  '
-                            onClick={() => handleDeleteToCart(id)}
+                            onClick={() => {
+                                handleDeleteToCart(id);
+                                
+                            }
+                            }
                         >
                             Xóa
                         </Button>
+                    
+                            
+                        
                     </div>
                 </div>
             </div>
