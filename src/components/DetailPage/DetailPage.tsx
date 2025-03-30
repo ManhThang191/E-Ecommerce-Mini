@@ -1,11 +1,12 @@
 import React from 'react'
 import { Button } from 'antd';
-import { LeftOutlined } from '@ant-design/icons'
+import { LeftOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import Link from 'next/link';
+
 interface DetailPageProps {
   name: string;
   nameBack: string;
-  address : string;
+  address: string;
 }
 
 function DetailPage({ name, nameBack, address }: DetailPageProps) {
@@ -21,6 +22,18 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
               <Button className='hover:!text-black hover:!border-black'>
                 <Link href={'/'} >
                   <LeftOutlined /> {nameBack}
+                </Link>
+              </Button>
+            </div>
+          </>
+        ) : ("")}
+
+        {address == "Home" ? (
+          <>
+            <div className="ml-auto">
+              <Button className='hover:!text-black hover:!border-black'>
+                <Link href={'/CartProduct'} >
+                <ShoppingCartOutlined /> {nameBack}
                 </Link>
               </Button>
             </div>

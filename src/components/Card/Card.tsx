@@ -24,20 +24,16 @@ function Card({ id, title, price, image,category, description, rating }: CardPro
 
     const { state, dispatch } = useCart();
     console.log(state) 
-    const handleAddToCart = (productID: number) => {
 
+    const handleAddToCart = (productID: number) => {
         dispatch({
             type: "ADD_PRODUCT",
-            payload: {image:image,category: category, id: productID, name: title, price: price, quantity: 1 }
+            payload: { image: image, category: category, id: productID, name: title, price: price, quantity: 1 }
         });
-
-        // console.log(typeof id)
+        message.success(`${title} đã được thêm vào giỏ hàng!`,2);
+        
     }
 
-    const hanldeShowSucess = () =>{
-        message.success('aa',2);
-
-    }
     return (
 
         <Link href={`/Detail/${id}`} className="h-auto hover:transform hover:scale-105 duration-300">
@@ -80,6 +76,7 @@ function Card({ id, title, price, image,category, description, rating }: CardPro
                                 e.preventDefault();
                                 e.stopPropagation();
                                 handleAddToCart(id);
+                                
                             }}
                         >
                                 

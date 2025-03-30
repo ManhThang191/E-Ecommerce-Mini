@@ -34,7 +34,7 @@ const ProductList = () => {
 
   return (
     <>
-      <DetailPage name={'Sản Phẩm'} nameBack="" address={'Home'} />
+      <DetailPage name={'Sản Phẩm'} nameBack=" Gio Hang" address={'Home'} />
       <div className="list_product grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         {productsList.map((product) => (
           <Card
