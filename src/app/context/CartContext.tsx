@@ -1,4 +1,5 @@
 "use client";
+import { message } from 'antd';
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
 
 interface Product {
@@ -49,8 +50,11 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
                     )
                     : [...state.products, { ...action.payload, quantity: action.payload.quantity }];
             } else {
+                // message.success('Product added successfully!', 3);
+                // console.log('add ')
                 updatedProducts = state.products;
             }
+            
             break;
 
         case 'REMOVE_PRODUCT':
