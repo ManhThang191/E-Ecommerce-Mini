@@ -22,11 +22,11 @@ function sidebar() {
                         <li><div className='text-lg flex items-center hover:text-amber-400'> <HomeOutlined className='mr-2' />Home</div> </li>
                     </Link>
 
-                    <Link href={'/'}>
+                    <Link href={'/Order'}>
                         <li><div className='text-lg flex items-center hover:text-amber-400'>
                             <FileSearchOutlined className='mr-1' />Đơn Hàng
                         </div> </li>
-                    
+
                     </Link>
 
                     <li className="relative flex items-center w-full md:w-auto">
@@ -38,8 +38,8 @@ function sidebar() {
                     </Link>
 
                     <Link href={'/CartProduct'}>
-                        <li><div  className='text-lg flex items-center hover:text-amber-400'> <ShoppingCartOutlined className='mr-2' />Giỏ Hàng</div> </li>
-                    
+                        <li><div className='text-lg flex items-center hover:text-amber-400'> <ShoppingCartOutlined className='mr-2' />Giỏ Hàng</div> </li>
+
                     </Link>
                     <li><a href="#" className='text-lg flex items-center'><LoginOutlined className='mr-2' />Login/Log out</a> </li>
                 </ul>

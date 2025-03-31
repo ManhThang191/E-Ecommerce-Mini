@@ -1,6 +1,5 @@
 import React from 'react'
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import CardDetail from '@/components/CardDetail/CardDetail';
 import { useParams } from 'next/navigation';
 import { useData } from '@/app/context/DataContext';
@@ -30,7 +29,7 @@ function ShowDetail() {
     }
 
     // console.log(products)
-    
+
 
     return (
         <>

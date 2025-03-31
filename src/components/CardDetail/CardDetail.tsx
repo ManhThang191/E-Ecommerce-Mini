@@ -4,7 +4,7 @@ import DetailPage from '@/components/DetailPage/DetailPage';
 // import axios from 'axios';
 // import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
 import { useCart } from '@/app/context/CartContext';
 
@@ -24,17 +24,23 @@ interface CardProps {
 }
 
 
-function CardDetail({ id, title, price, image, description, category, rating: { rate , count } }: CardProps) {
+function CardDetail({ id, title, price, image, description, category, rating: { rate, count } }: CardProps) {
 
 
     const { state, dispatch } = useCart()
-    
+
     const handleAddToCart = (productID: number) => {
 
-        dispatch({
-            type: "ADD_PRODUCT",
-            payload: {image:image,category: category, id: productID, name: title, price: price, quantity: 1 }
-        });
+        try {
+            dispatch({
+                type: "ADD_PRODUCT",
+                payload: { image: image, category: category, id: productID, name: title, price: price, quantity: 1 }
+            });
+            message.success('Đã thêm vào giỏ hàng!!')
+
+        } catch (error) {
+            message.error('Thêm thất bại!!')
+        }
 
         // console.log(typeof id)
     }
@@ -42,14 +48,14 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
     return (
         <>
             <DetailPage name={'Chi Tiết Sản Phẩm'} nameBack={'Home'} address={'Detail'}>
-                
+
             </DetailPage>
             <div className='m-auto w-250 h-130 flex text-center rounded-xl border-1 overflow-hidden '
 
             >
                 <div className='flex-1 w-full h-full relative'>
                     <Image
-                        src={image || ""} 
+                        src={image || ""}
                         alt={title}
                         layout='fill'
                         objectFit='contain'
@@ -91,12 +97,13 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                         </Button>
 
                         <Button className='flex-1 m-3 p-6 hover:transform hover:!scale-110 hover:!border-none
-                                         hover:!bg-green-200 hover:!text-black text-lg !h-15'>
-                            <ShoppingCartOutlined className='text-2xl' 
-                                onClick={() => {
-                                    handleAddToCart(id);
+                                         hover:!bg-green-200 hover:!text-black text-lg !h-15'
+                            onClick={() => {
+                                handleAddToCart(id);
+                            }}
+                        >
+                            <ShoppingCartOutlined className='text-2xl'
 
-                                }}
                             />
                         </Button>
 
