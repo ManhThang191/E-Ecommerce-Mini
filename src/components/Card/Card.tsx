@@ -1,7 +1,6 @@
-"use client";
-import React, { useContext } from 'react'
+// "use client";
+import React from 'react'
 import Image from 'next/image'
-// import 'antd/dist/antd.css'
 import { Button, message } from 'antd'
 import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
 import Link from 'next/link';
@@ -17,21 +16,26 @@ interface CardProps {
         rate: number;
         count: number;
     };
-    category :string;
+    category: string;
 }
 
-function Card({ id, title, price, image,category, description, rating }: CardProps) {
+function Card({ id, title, price, image, category, description, rating }: CardProps) {
 
-    const { state, dispatch } = useCart();
+    const { dispatch } = useCart();
     // console.log(state) 
 
     const handleAddToCart = (productID: number) => {
-        dispatch({
-            type: "ADD_PRODUCT",
-            payload: { image: image, category: category, id: productID, name: title, price: price, quantity: 1 }
-        });
-        message.success(`${title} đã được thêm vào giỏ hàng!`,2);
-        
+        try {
+            dispatch({
+                type: "ADD_PRODUCT",
+                payload: { image: image, category: category, id: productID, name: title, price: price, quantity: 1 }
+            });
+            message.success(`${title} đã được thêm vào giỏ hàng!`);
+        } catch (error) {
+            message.error(`${title} không được thêm vào giỏ hàng!`);
+        }
+
+
     }
 
     return (
@@ -66,7 +70,7 @@ function Card({ id, title, price, image,category, description, rating }: CardPro
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                
+
                             }}
                         >
                             Mua Ngay
@@ -76,11 +80,11 @@ function Card({ id, title, price, image,category, description, rating }: CardPro
                                 e.preventDefault();
                                 e.stopPropagation();
                                 handleAddToCart(id);
-                                
+
                             }}
                         >
-                                
-                                <ShoppingCartOutlined />
+
+                            <ShoppingCartOutlined />
                         </Button>
                         <Button className="flex-1  !text-pink-600 hover:!text-white
                                      hover:!bg-pink-600 hover:!border-none

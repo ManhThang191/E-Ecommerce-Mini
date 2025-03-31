@@ -25,7 +25,7 @@ const savedCartProducts = localStorage.getItem('cartProducts');
 const initialState: CartState = {
     products: savedCartProducts ? JSON.parse(savedCartProducts) : [],
 };
-console.log(initialState)
+// console.log(initialState)
 const CartContext = createContext<{
     state: CartState;
     dispatch: React.Dispatch<CartAction>;
@@ -52,9 +52,10 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
             } else {
                 // message.success('Product added successfully!', 3);
                 // console.log('add ')
+                // message.success(`${state.products} đã được thêm vào giỏ hàng!`);
                 updatedProducts = state.products;
             }
-            
+
             break;
 
         case 'REMOVE_PRODUCT':
@@ -69,8 +70,8 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         case 'CLEAR_CART':
             updatedProducts = [];
             break;
-            
-        case 'PLUS_QUALITY' :
+
+        case 'PLUS_QUALITY':
             if (action.payload) {
                 const existingProduct = state.products.find(product => product.id === action.payload!.id);
                 updatedProducts = existingProduct
@@ -106,7 +107,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     return {
         ...state,
         products: updatedProducts,
-        
+
     };
 
 };
