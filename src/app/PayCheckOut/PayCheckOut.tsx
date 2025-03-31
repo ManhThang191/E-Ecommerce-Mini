@@ -35,9 +35,33 @@ function PayCheckOut() {
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
 
+
+    const CheckOut = () => {
+        try {
+            const orderDetails = {
+                customerName: name,
+                customerPhone: phone,
+                customerAddress: address,
+                products: state.products,
+                totalQuantity: ProductTotal(),
+                totalPrice: PriceTotal(),
+            };
+
+            // Save the order details to local storage
+            const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+            existingOrders.push(orderDetails);
+            localStorage.setItem('orders', JSON.stringify(existingOrders));
+
+            message.success('Đặt hàng thành công!');
+        } catch (error) {
+            message.error('Đặt thất bại!!')
+        }
+    }
+
     return (
         <>
             <DetailPage name={'Thanh Toán'} address='Home' nameBack={"Giỏ Hàng"} />
+
             <div className=' w-full max-w-5xl h-auto m-auto 
                             last:mb-8 mt-5 border border-gray-300 
                              flex-col p-5 rounded-2xl mb-50'
@@ -114,17 +138,7 @@ function PayCheckOut() {
 
                         disabled={!name || !phone || !address}
                         onClick={() => {
-                            const orderData = {
-                                name,
-                                phone,
-                                address,
-                                products: state.products,
-                                totalQuantity: ProductTotal(),
-                                totalPrice: PriceTotal(),
-                            };
-
-                            localStorage.setItem('orderData', JSON.stringify(orderData));
-                            message.success('Đơn hàng đã được lưu vào Local Storage!');
+                            CheckOut()
                         }}
                     >
                         Đặt Hàng
