@@ -25,7 +25,7 @@ function CartList({ id, image, title, price, category, quality }: PropCartList) 
     // console.log(state)
     // const ProductList = state.products
     // console.log(ProductList)
-    const total: number = parseFloat((price * quality).toFixed(4));
+    const total: number = parseFloat((price * quality).toFixed(2));
     // console.log(typeof total)
     const { state, dispatch } = useCart()
 

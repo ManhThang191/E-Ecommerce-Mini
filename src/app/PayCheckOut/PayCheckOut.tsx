@@ -1,0 +1,111 @@
+"use client";
+import React from 'react'
+import DetailPage from '@/components/DetailPage/DetailPage'
+// import CardUserCheckOut from '@/components/CardUserCheckOut/CardUserCheckOut'
+import { useCart } from '../context/CartContext'
+import { Button, Input, message } from "antd";
+
+
+
+function PayCheckOut() {
+    const { state } = useCart();
+    // const total: number = parseFloat((price * quality).toFixed(4));
+
+    const ProductTotal = () => {
+        let productTotal: number = 0;
+        state.products.forEach((product) => {
+            productTotal += product.quantity;
+        });
+
+        return productTotal;
+    }
+
+    const PriceTotal = () => {
+        let priceTotal: number = 0;
+
+        state.products.map((product) => {
+            priceTotal += parseFloat((product.price * product.quantity).toFixed(3));
+        });
+
+        return priceTotal;
+    }
+    return (
+        <>
+            <DetailPage name={'Thanh Toán'} address='Home' nameBack={"Giỏ Hàng"} />
+            <div className=' w-full max-w-5xl h-auto m-auto 
+                            last:mb-8 mt-5 border border-gray-300 
+                             flex-col p-5 rounded-2xl mb-50'
+            >
+                <h1 className='mb-4'>THÔNG TIN ĐƠN HÀNG</h1>
+                <div className='bg-blue-100 '>
+                    <div className='flex w-full p-5 text-center'>
+                        <div className='flex-2'>SẢN PHẨM</div>
+                        <div className='flex-1'>GIÁ</div>
+                        <div className='flex-1'>SỐ LƯỢNG</div>
+                        <div className='flex-1'>THÀNH GIÁ</div>
+                    </div>
+                    {state.products.map((product) => (
+                        <div
+                            key={product.id}
+                            className={`w-full flex p-5 text-center ${state.products.indexOf(product) % 2 === 0 ? 'bg-gray-100' : ''}`}
+                        >
+                            <span className='flex-2 text-start'>{product.name}</span>
+                            <span className='flex-1'>$ {product.price}</span>
+                            <span className='flex-1'>{product.quantity}</span>
+                            <span className='flex-1 text-red-500'>
+                                ${(product.price * product.quantity).toFixed(2)}
+                            </span>
+                        </div>
+                    ))}
+                    <div className='flex p-5 text-red-500 text-xl'>
+                        <div className='flex-3 text-start'>TỔNG</div>
+                        <div className='flex-1 text-center'>
+                            <span className=''>{ProductTotal()}</span>
+                        </div>
+                        <div className='flex-1 text-center'>
+                            <span className=''>$ {PriceTotal()}</span>
+                        </div>
+                    </div>
+                </div>
+                <div className='m-5'>
+                    <h1 className='mb-5'>
+                        Thông tin khách hàng
+                    </h1>
+                    <div className='flex items-center mb-2 m-2'>
+                        <span className='mr-2 w-32'>Tên</span>
+                        <Input className='flex-1' placeholder='Nhập tên của bạn' />
+                    </div>
+                    <div className='flex items-center mb-2 m-2'>
+                        <span className='mr-2 w-32'>Số Điện Thoại</span>
+                        <Input className='flex-1 ' placeholder='Nhập số điện thoại của bạn' />
+                    </div>
+                    <div className='flex items-center m-2'>
+                        <span className='mr-2 w-32'>Địa Chỉ</span>
+                        <Input className='flex-1' placeholder='Nhập địa chỉ của bạn' />
+                    </div>
+                </div>
+                <div className='flex justify-end p-5'>
+                    <Button className='mr-20 scale-120 
+                                        hover:!bg-green-700 hover:!text-white
+                                        hover:!border-none hover:scale-125 !border-green-700 !text-green-700
+                        '
+                        onClick={() => {
+                            // try {
+                            //     message.success('Đặt thành công', 4)
+                                
+                            // } catch (error) {
+                            //     console.log(error)
+                            // }
+                        }}
+                        
+                    >
+                        Đặt Hàng
+                    </Button>
+                </div>
+
+            </div>
+        </>
+    )
+}
+
+export default PayCheckOut

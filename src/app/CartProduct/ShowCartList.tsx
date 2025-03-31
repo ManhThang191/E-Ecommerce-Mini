@@ -4,7 +4,7 @@ import CartList from '@/components/CartList/CartList'
 import DetailPage from '@/components/DetailPage/DetailPage';
 import { useCart } from '../context/CartContext';
 import { Button } from 'antd';
-
+import Link from 'next/link';
 
 function ShowCartList() {
   const { state } = useCart();
@@ -70,10 +70,13 @@ function ShowCartList() {
             Tổng cộng ( <span className='text-amber-200'>{ProductTotal()}</span> sản phẩm ) : <span className='text-amber-200'>$ {PriceTotal()}</span>
           </div>
 
-          <Button className='mr-10 scale-130 !border-black 
-                        hover:!scale-145 hover:!text-blue-800 hover:!text-red-700'>
-            Mua Hàng
-          </Button>
+          <Link href={'/PayCheckOut'}>
+            <Button className='mr-10 scale-130 !border-black 
+                          hover:!scale-145 hover:!text-blue-800 hover:!text-red-700'>
+              Đặt Hàng
+            </Button>
+          
+          </Link>
         </div>
 
       </div>
