@@ -23,7 +23,7 @@ interface CardProps {
 function Card({ id, title, price, image,category, description, rating }: CardProps) {
 
     const { state, dispatch } = useCart();
-    console.log(state) 
+    // console.log(state) 
 
     const handleAddToCart = (productID: number) => {
         dispatch({

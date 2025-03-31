@@ -26,14 +26,16 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
               </Button>
             </div>
           </>
-        ) : ("")}
+        ) : ("")
+
+        }
 
         {address == "Home" ? (
           <>
             <div className="ml-auto">
               <Button className='hover:!text-black hover:!border-black'>
                 <Link href={'/CartProduct'} >
-                <ShoppingCartOutlined /> {nameBack}
+                  <ShoppingCartOutlined /> {nameBack}
                 </Link>
               </Button>
             </div>
