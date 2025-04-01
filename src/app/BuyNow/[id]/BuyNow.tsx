@@ -1,67 +1,35 @@
-"use client";
 import React, { useState } from 'react'
 import DetailPage from '@/components/DetailPage/DetailPage'
-// import CardUserCheckOut from '@/components/CardUserCheckOut/CardUserCheckOut'
-import { useCart } from '../context/CartContext'
-import { Button, Input, message } from "antd";
+import { useParams } from 'next/navigation';
+import { useData } from '@/app/context/DataContext';
+import { Button, Input } from 'antd';
 
 
-
-function PayCheckOut() {
-    const { state } = useCart();
-    // const total: number = parseFloat((price * quality).toFixed(4));
-
-    const ProductTotal = () => {
-        let productTotal: number = 0;
-        state.products.forEach((product) => {
-            productTotal += product.quantity;
-        });
-
-        return productTotal;
+function BuyNow() {
+    interface product {
+        id: number;
+        title: string;
+        price: number;
+        category: string;
+        quality: number;
     }
 
-    const PriceTotal = () => {
-        let priceTotal: number = 0;
+    const id: string = useParams().id as string;
+    console.log(id)
 
-        state.products.map((product) => {
-            priceTotal += parseFloat((product.price * product.quantity).toFixed(3));
-        });
+    const { state } = useData();
+    const ProductDetail = state.data as product[];
+    // const ProductDetail = state.data;
 
-        return parseFloat(priceTotal.toFixed(2));
-
-    }
+    const products = ProductDetail.find((item: product) => item.id === parseInt(id));
+    console.log(products)
 
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
-
-
-    const CheckOut = () => {
-        try {
-            const orderDetails = {
-                customerName: name,
-                customerPhone: phone,
-                customerAddress: address,
-                products: state.products,
-                totalQuantity: ProductTotal(),
-                totalPrice: PriceTotal(),
-            };
-
-            // Save the order details to local storage
-            const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-            existingOrders.push(orderDetails);
-            localStorage.setItem('orders', JSON.stringify(existingOrders));
-
-            message.success('Đặt hàng thành công!');
-        } catch (error) {
-            message.error('Đặt thất bại!!')
-        }
-    }
-
     return (
         <>
-            <DetailPage name={'Thanh Toán'} address='Home' nameBack={"Giỏ Hàng"} />
-
+            <DetailPage name={'Mua Ngay'} nameBack={'Home'} address={'BuyNow'} />
             <div className=' w-full max-w-5xl h-auto m-auto 
                             last:mb-8 mt-5 border border-gray-300 
                              flex-col p-5 rounded-2xl mb-50'
@@ -74,29 +42,29 @@ function PayCheckOut() {
                         <div className='flex-1'>SỐ LƯỢNG</div>
                         <div className='flex-1'>THÀNH GIÁ</div>
                     </div>
-                    {state.products.map((product) => (
-                        <div
-                            key={product.id}
-                            className={`w-full flex p-5 text-center ${state.products.indexOf(product) % 2 === 0 ? 'bg-gray-100' : ''}`}
-                        >
-                            <span className='flex-2 text-start'>{product.name}</span>
-                            <span className='flex-1'>$ {product.price}</span>
-                            <span className='flex-1'>{product.quantity}</span>
-                            <span className='flex-1 text-red-500'>
-                                ${(product.price * product.quantity).toFixed(2)}
-                            </span>
-                        </div>
-                    ))}
+                    <div key={products?.id} className='flex w-full p-5 text-center'>
+                        <span className='flex-2'>{products?.title}</span>
+                        <span className='flex-1'>$ {products?.price}</span>
+                        <span className='flex-1'>{products?.quality}</span>
+                        <span className='flex-1'>$ {products?.price}</span>
+                    </div>
+
                     <div className='flex p-5 text-red-500 text-xl bg-amber-100'>
                         <div className='flex-3 text-start'>TỔNG</div>
                         <div className='flex-1 text-center'>
-                            <span className=''>{ProductTotal()}</span>
+                            <span className=''>
+                                {/* {ProductTotal()} */}
+                            </span>
                         </div>
                         <div className='flex-1 text-center'>
-                            <span className=''>$ {PriceTotal()}</span>
+                            <span className=''>
+                                {/* $ {PriceTotal()} */}
+                            </span>
                         </div>
                     </div>
+
                 </div>
+
                 <div className='m-5'>
                     <h1 className='mb-5'>
                         Thông tin khách hàng
@@ -138,16 +106,20 @@ function PayCheckOut() {
 
                         disabled={!name || !phone || !address}
                         onClick={() => {
-                            CheckOut()
+                            // CheckOut()
                         }}
                     >
                         Đặt Hàng
                     </Button>
                 </div>
-
             </div>
+
+
+
+
+
         </>
     )
 }
 
-export default PayCheckOut
+export default BuyNow

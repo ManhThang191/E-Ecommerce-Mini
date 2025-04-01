@@ -1,14 +1,24 @@
-// "use client";
+"use client";
 import React from 'react'
 // import 'antd' from 'antd'
 import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined } from '@ant-design/icons'
 import { Input } from 'antd';
 import Link from "next/link";
+import { useCart } from '@/app/context/CartContext';
 
 
+function Sidebar() {
 
-function sidebar() {
+    const { state } = useCart();
+    // console.log(state.products);
 
+    const ProductTotal = () => {
+        let productTotal: number = 0;
+        state.products.forEach((product) => {
+            productTotal += product.quantity;
+        });
+        return productTotal
+    }
 
     return (
         <>
@@ -38,7 +48,18 @@ function sidebar() {
                     </Link>
 
                     <Link href={'/CartProduct'}>
-                        <li><div className='text-lg flex items-center hover:text-amber-400'> <ShoppingCartOutlined className='mr-2' />Giỏ Hàng</div> </li>
+                        <li>
+                            <div className='text-lg flex items-center hover:text-amber-400 relative'>
+                                <ShoppingCartOutlined className='mr-2' />
+                                <span>
+                                    Giỏ Hàng
+                                </span>
+                                <span className='absolute bg-red-500 text-white -top-1 -right-4
+                                        text-xs rounded-full w-5 h-5 flex items-center justify-center'>
+                                    {ProductTotal()}
+                                </span>
+                            </div>
+                        </li>
 
                     </Link>
                     <li><a href="#" className='text-lg flex items-center'><LoginOutlined className='mr-2' />Login/Log out</a> </li>
@@ -50,4 +71,4 @@ function sidebar() {
     )
 }
 
-export default sidebar
+export default Sidebar

@@ -1,10 +1,7 @@
 "use client";
 import Card from "@/components/Card/Card";
 import DetailPage from "@/components/DetailPage/DetailPage";
-
-// import { useSearchParams } from "react-router-dom";
 import { useData } from "./DataContext";
-import { count } from "console";
 
 
 const ProductList = () => {
@@ -30,27 +27,29 @@ const ProductList = () => {
   }
 
   const productsList: Product[] = state.data as Product[]
-  
+
+
 
   return (
     <>
-      <DetailPage name={'Sản Phẩm'} nameBack=" Gio Hang" address={'Home'} />
+      <DetailPage name={'Sản Phẩm'} nameBack="Giỏ Hàng" address={'Home'} />
+
       <div className="list_product grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         {productsList.map((product) => (
           <Card
-            key={product.id} 
-            id={product.id} 
+            key={product.id}
+            id={product.id}
             title={product.title}
             price={product.price}
             image={product.image || ""}
             description={product.description}
-            rating = {product.rating}
+            rating={product.rating}
             category={product.category}
-        
+
           />
         ))}
-       
-        
+
+
       </div>
 
     </>

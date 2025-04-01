@@ -63,18 +63,20 @@ function Card({ id, title, price, image, category, description, rating }: CardPr
                         {description}
                     </span>
                     <div className="flex justify-between gap-1.5 my-2.5">
-                        <Button className="flex-1 !bg-cyan-700 !text-white 
-                                         hover:bg-cyan-800 rounded-lg
-                                         hover:transform hover:scale-105 hover:!text-amber-200
-                        "
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
 
-                            }}
-                        >
-                            Mua Ngay
-                        </Button>
+                        <Link href={`/Detail/${id}`}>
+                            <Button className="flex-1 !bg-cyan-700 !text-white 
+                                            hover:bg-cyan-800 rounded-lg
+                                            hover:transform hover:scale-105 hover:!text-amber-200
+                            "
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                }}
+                            >
+                                Chi tiết
+                            </Button>
+                        </Link>
+
                         <Button className="flex-1 hover:transform hover:!scale-110 hover:!border-none hover:!bg-green-200 hover:!text-black "
                             onClick={(e) => {
                                 e.preventDefault();
