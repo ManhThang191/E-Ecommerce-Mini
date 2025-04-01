@@ -19,8 +19,12 @@ function ShowDetail() {
     // console.log(useParams());
 
     const id: string = useParams().id as string;
-    const { state }: { state: { data: product[] } } = useData();
-    const ProductDetail = state.data;
+    // const { state }: { state: { data: product[] } } = useData();
+    // const ProductDetail = state.data;
+
+    const { state } = useData();
+    const ProductDetail = state.data as product[];
+    // const ProductDetail = state.data;
 
     const products = ProductDetail.find((item: product) => item.id === parseInt(id));
 

@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 function ShowCartList() {
   const { state } = useCart();
-  console.log(state.products);
+  // console.log(state.products);
 
   const ProductTotal = () => {
     let productTotal: number = 0;

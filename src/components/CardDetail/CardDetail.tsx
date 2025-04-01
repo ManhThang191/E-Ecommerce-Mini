@@ -5,8 +5,9 @@ import DetailPage from '@/components/DetailPage/DetailPage';
 // import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button, message } from 'antd';
-import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
+import { HeartOutlined, MinusOutlined, PlusOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
 import { useCart } from '@/app/context/CartContext';
+import Link from 'next/link';
 
 
 interface CardProps {
@@ -27,7 +28,7 @@ interface CardProps {
 function CardDetail({ id, title, price, image, description, category, rating: { rate, count } }: CardProps) {
 
 
-    const { state, dispatch } = useCart()
+    const { dispatch } = useCart()
 
     const handleAddToCart = (productID: number) => {
 
@@ -44,8 +45,16 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
 
         // console.log(typeof id)
     }
+    const [quality, setQuality] = React.useState<number>(1);
 
+    const hanldeDownQuality = () => {
+        setQuality((prevQuality) => Math.max(prevQuality - 1, 1));
+    }
+    const hanldeUpQuality = () => {
+        setQuality((prevQuality) => prevQuality + 1);
+    }
     return (
+
         <>
             <DetailPage name={'Chi Tiết Sản Phẩm'} nameBack={'Home'} address={'Detail'}>
 
@@ -75,7 +84,7 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                             <span className='text-black'>( {count} )</span>
                         </div>
                     </div>
-                    <div className=' flex flex-col items-start  pl-5 pr-5  ' style={{ height: '35%' }}>
+                    <div className=' flex flex-col items-start pl-5 pr-5  ' style={{ height: '35%' }}>
                         <div className='mb-3'>
                             <span>
                                 Category : {category}
@@ -86,17 +95,39 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                                 {description}
                             </span>
                         </div>
+
                     </div>
                     <div className=' flex items-center justify-center' style={{ height: '25%' }}>
-                        <Button className='flex-2 m-3 p-6 !bg-cyan-700 !text-white 
-                                         hover:bg-cyan-800 rounded-lg !h-15
-                                        hover:transform hover:scale-105  hover:!text-amber-200 text-lg'>
-                            <p className='text-2xl'>
-                                Mua Ngay
-                            </p>
-                        </Button>
+                        <div className='scale-150 w-40 mr-5'>
+                            <Button className={`scale-70 ${quality <= 1 ? '!cursor-not-allowed !text-gray-400 !border-none' : 'hover:!text-black hover:!border-black'}`}
+                                onClick={() => {
+                                    hanldeDownQuality()
+                                }}
+                                disabled={quality <= 1}
+                            >
+                                <MinusOutlined />
+                            </Button>
+                            <span className='bg-amber-100 h-auto w-10 inline-block text-center rounded-md'>
+                                {quality}
+                            </span>
+                            <Button className='scale-70 hover:!text-black hover:!border-black'
+                                onClick={() => hanldeUpQuality()}
+                            >
+                                <PlusOutlined />
+                            </Button>
+                        </div>
 
-                        <Button className='flex-1 m-3 p-6 hover:transform hover:!scale-110 hover:!border-none
+                        <Link href={`/BuyNow/${id}`}>
+                            <Button className='flex-2 m-3 p-6 !bg-cyan-700 !text-white 
+                                            hover:bg-cyan-800 rounded-lg !h-15
+                                            hover:transform hover:scale-105  hover:!text-amber-200 text-lg'>
+                                <p className='text-2xl'>
+                                    Mua Ngay
+                                </p>
+                            </Button>
+                        </Link>
+
+                        <Button className='flex-1 m-3 max-w-20 p-6 hover:transform hover:!scale-110 hover:!border-none
                                          hover:!bg-green-200 hover:!text-black text-lg !h-15'
                             onClick={() => {
                                 handleAddToCart(id);
@@ -107,11 +138,11 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                             />
                         </Button>
 
-                        <Button className='flex-1 m-3 p-6 !text-pink-600 hover:!text-white
+                        {/* <Button className='flex-1 m-3 p-6 !text-pink-600 hover:!text-white
                                      hover:!bg-pink-600 hover:!border-none
                                      hover:transform hover:scale-105 text-lg !h-15'>
                             <HeartOutlined className='text-2xl ' />
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
 
