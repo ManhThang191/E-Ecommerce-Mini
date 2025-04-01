@@ -46,6 +46,7 @@ function Card({ id, title, price, image, category, description, rating }: CardPr
                 <Image src={image} alt={title} width={0} height={0}
                     className="card_img w-3/5 h-auto m-auto rounded-lg object-cover"
                     loader={({ src }) => src}
+                    priority
                 />
                 <div className="flex flex-col rounded-lg">
                     <h2 className="my-2.5 max-h-17 overflow-hidden font-bold text-base leading-6 ">

@@ -39,13 +39,17 @@ function PayCheckOut() {
     const CheckOut = () => {
         try {
             const orderDetails = {
+                id: Date.now(),
                 customerName: name,
                 customerPhone: phone,
                 customerAddress: address,
                 products: state.products,
                 totalQuantity: ProductTotal(),
                 totalPrice: PriceTotal(),
+                orderDate: ''
             };
+            const orderDate = new Date().toLocaleDateString();
+            orderDetails.orderDate = orderDate;
 
             // Save the order details to local storage
             const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
@@ -53,6 +57,12 @@ function PayCheckOut() {
             localStorage.setItem('orders', JSON.stringify(existingOrders));
 
             message.success('Đặt hàng thành công!');
+
+            // Clear the cart products in local storage
+            localStorage.removeItem('cartProducts');
+
+            window.location.href = '/Order';
+
         } catch (error) {
             message.error('Đặt thất bại!!')
         }
@@ -139,6 +149,7 @@ function PayCheckOut() {
                         disabled={!name || !phone || !address}
                         onClick={() => {
                             CheckOut()
+
                         }}
                     >
                         Đặt Hàng

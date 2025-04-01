@@ -53,6 +53,17 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
     const hanldeUpQuality = () => {
         setQuality((prevQuality) => prevQuality + 1);
     }
+
+    React.useEffect(() => {
+        const savedQuality = localStorage.getItem(`product_${id}_quality`);
+        if (savedQuality) {
+            setQuality(Number(savedQuality));
+        }
+    }, [id]);
+
+    React.useEffect(() => {
+        localStorage.setItem(`product_${id}_quality`, quality.toString());
+    }, [id, quality]);
     return (
 
         <>

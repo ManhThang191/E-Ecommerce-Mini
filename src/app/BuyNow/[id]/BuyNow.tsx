@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import DetailPage from '@/components/DetailPage/DetailPage'
 import { useParams } from 'next/navigation';
 import { useData } from '@/app/context/DataContext';
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 
 
 function BuyNow() {
+
     interface product {
         id: number;
         title: string;
@@ -15,18 +16,48 @@ function BuyNow() {
     }
 
     const id: string = useParams().id as string;
-    console.log(id)
+    // console.log(id)
 
     const { state } = useData();
     const ProductDetail = state.data as product[];
     // const ProductDetail = state.data;
 
     const products = ProductDetail.find((item: product) => item.id === parseInt(id));
-    console.log(products)
+    // console.log(products)
 
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
+
+    const quality = parseInt(localStorage.getItem(`product_${id}_quality`) || '1');
+
+
+    const CheckOut = () => {
+        try {
+            const orderDetails = {
+                id: Date.now(),
+                customerName: name,
+                customerPhone: phone,
+                customerAddress: address,
+                products: [products],
+                totalQuantity: quality,
+                totalPrice: products?.price,
+            };
+
+            // Save the order details to local storage
+            const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+            existingOrders.push(orderDetails);
+            localStorage.setItem('orders', JSON.stringify(existingOrders));
+
+            message.success('Đặt hàng thành công!');
+
+            localStorage.removeItem(`product_${id}_quality`)
+            window.location.href = '/Order';
+
+        } catch (error) {
+            message.error('Đặt thất bại!!')
+        }
+    }
     return (
         <>
             <DetailPage name={'Mua Ngay'} nameBack={'Home'} address={'BuyNow'} />
@@ -45,20 +76,20 @@ function BuyNow() {
                     <div key={products?.id} className='flex w-full p-5 text-center'>
                         <span className='flex-2'>{products?.title}</span>
                         <span className='flex-1'>$ {products?.price}</span>
-                        <span className='flex-1'>{products?.quality}</span>
-                        <span className='flex-1'>$ {products?.price}</span>
+                        <span className='flex-1'>{quality}</span>
+                        <span className='flex-1'>$ {(products?.price ?? 0) * quality}</span>
                     </div>
 
                     <div className='flex p-5 text-red-500 text-xl bg-amber-100'>
                         <div className='flex-3 text-start'>TỔNG</div>
                         <div className='flex-1 text-center'>
                             <span className=''>
-                                {/* {ProductTotal()} */}
+                                {quality}
                             </span>
                         </div>
                         <div className='flex-1 text-center'>
                             <span className=''>
-                                {/* $ {PriceTotal()} */}
+                                $ {(products?.price ?? 0) * quality}
                             </span>
                         </div>
                     </div>
@@ -106,7 +137,7 @@ function BuyNow() {
 
                         disabled={!name || !phone || !address}
                         onClick={() => {
-                            // CheckOut()
+                            CheckOut()
                         }}
                     >
                         Đặt Hàng

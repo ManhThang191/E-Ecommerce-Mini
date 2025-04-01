@@ -28,7 +28,7 @@ const ProductList = () => {
 
   const productsList: Product[] = state.data as Product[]
 
-
+  const idUnique = Date.now();
 
   return (
     <>
@@ -37,7 +37,7 @@ const ProductList = () => {
       <div className="list_product grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         {productsList.map((product) => (
           <Card
-            key={product.id}
+            key={idUnique}
             id={product.id}
             title={product.title}
             price={product.price}
