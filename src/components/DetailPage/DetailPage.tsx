@@ -21,13 +21,17 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
     });
     return productTotal
   }
+
+
   return (
     <>
       <div className="bg-cyan-900 text-white p-4 rounded-md m-4 ml-2 mr-2 flex items-center sticky top-1 z-30">
         <h1>
           {name}
         </h1>
-        {address !== "Home" ? (
+
+
+        {address !== "Home" && address !== "DetailOrder" ? (
           <>
             <div className="ml-auto">
               <Button className='hover:!text-black hover:!border-black'>
@@ -40,6 +44,20 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
         ) : ("")
 
         }
+
+        {address == "DetailOrder" ? (
+          <>
+            <div className="ml-auto">
+              <Button className='hover:!text-black hover:!border-black'>
+                <Link href={'/Order'} >
+                  <LeftOutlined /> {nameBack}
+
+                </Link>
+
+              </Button>
+            </div>
+          </>
+        ) : (null)}
 
         {address == "Home" ? (
           <>

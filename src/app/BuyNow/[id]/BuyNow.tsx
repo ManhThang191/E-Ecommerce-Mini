@@ -12,7 +12,7 @@ function BuyNow() {
         title: string;
         price: number;
         category: string;
-        quality: number;
+        quantity: number;
     }
 
     const id: string = useParams().id as string;
@@ -29,20 +29,34 @@ function BuyNow() {
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
 
-    const quality = parseInt(localStorage.getItem(`product_${id}_quality`) || '1');
+    const quantity = parseInt(localStorage.getItem(`product_${id}_quantity`) || '1');
+    // console.log(typeof quantity)
 
+    const totalPrice: number = (products?.price ?? 0) * quantity
 
     const CheckOut = () => {
+
         try {
+
+
             const orderDetails = {
                 id: Date.now(),
                 customerName: name,
                 customerPhone: phone,
                 customerAddress: address,
                 products: [products],
-                totalQuantity: quality,
-                totalPrice: products?.price,
+                totalQuantity: 0,
+                totalPrice: 0,
+                orderDate: ''
             };
+            orderDetails.totalPrice = (products?.price ?? 0) * quantity
+            orderDetails.totalQuantity = parseInt(localStorage.getItem(`product_${id}_quantity`) || '1')
+            const orderDate = new Date().toLocaleDateString();
+            orderDetails.orderDate = orderDate;
+
+            if (orderDetails.products[0]) {
+                orderDetails.products[0].quantity = orderDetails.totalQuantity;
+            }
 
             // Save the order details to local storage
             const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
@@ -51,10 +65,10 @@ function BuyNow() {
 
             message.success('Đặt hàng thành công!');
 
-            localStorage.removeItem(`product_${id}_quality`)
+            localStorage.removeItem(`product_${id}_quantity`)
             window.location.href = '/Order';
 
-        } catch (error) {
+        } catch {
             message.error('Đặt thất bại!!')
         }
     }
@@ -76,20 +90,20 @@ function BuyNow() {
                     <div key={products?.id} className='flex w-full p-5 text-center'>
                         <span className='flex-2'>{products?.title}</span>
                         <span className='flex-1'>$ {products?.price}</span>
-                        <span className='flex-1'>{quality}</span>
-                        <span className='flex-1'>$ {(products?.price ?? 0) * quality}</span>
+                        <span className='flex-1'>{quantity}</span>
+                        <span className='flex-1'>$ {totalPrice}</span>
                     </div>
 
                     <div className='flex p-5 text-red-500 text-xl bg-amber-100'>
                         <div className='flex-3 text-start'>TỔNG</div>
                         <div className='flex-1 text-center'>
                             <span className=''>
-                                {quality}
+                                {quantity}
                             </span>
                         </div>
                         <div className='flex-1 text-center'>
                             <span className=''>
-                                $ {(products?.price ?? 0) * quality}
+                                $ {totalPrice}
                             </span>
                         </div>
                     </div>

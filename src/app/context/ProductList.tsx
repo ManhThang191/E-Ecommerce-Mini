@@ -24,6 +24,7 @@ const ProductList = () => {
     description: string;
     rating: number;
     category: string;
+    quantity: number
   }
 
   const productsList: Product[] = state.data as Product[]

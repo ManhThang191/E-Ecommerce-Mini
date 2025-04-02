@@ -17,6 +17,7 @@ interface CardProps {
         count: number;
     };
     category: string;
+    quantity: number;
 }
 
 function Card({ id, title, price, image, category, description, rating }: CardProps) {
@@ -28,10 +29,10 @@ function Card({ id, title, price, image, category, description, rating }: CardPr
         try {
             dispatch({
                 type: "ADD_PRODUCT",
-                payload: { image: image, category: category, id: productID, name: title, price: price, quantity: 1 }
+                payload: { image: image, category: category, id: productID, title: title, price: price, quantity: 1 }
             });
             message.success(`${title} đã được thêm vào giỏ hàng!`);
-        } catch (error) {
+        } catch {
             message.error(`${title} không được thêm vào giỏ hàng!`);
         }
 
