@@ -1,6 +1,7 @@
 "use client";
 import DetailPage from '@/components/DetailPage/DetailPage'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React from 'react'
 
@@ -40,18 +41,22 @@ function DetailOrder() {
         order.id == String(id)
     ));
 
-    console.log(orderDetail)  // => undefined
+    // console.log(orderDetail)  // => undefined
 
-    // React.useEffect(() => {
-    //     const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-    //     setOrders(storedOrders);
+    const handleCancelOrder = () => {
+        try {
+            if (!orderDetail) return;
 
-    //     const productKeys = Object.keys(localStorage).filter(key => key.startsWith('product_') && key.includes('_quantity'));
-    //     const productIds = productKeys.map(key => key.split('_')[1]);
-    //     console.log(productIds); // Logs the extracted ids
-    // }, []);
+            const updatedOrders = orders.filter(order => order.id !== orderDetail.id);
+            setOrders(updatedOrders);
+            localStorage.setItem('orders', JSON.stringify(updatedOrders));
+            message.success('Hủy thành công!')
+        } catch {
+            message.error('Hủy thất bại!')
+        }
 
-    // const totalQ = orderDetail?.totalQuantity
+    };
+
     return (
         <>
             <DetailPage name={'Chi tiết đơn hàng'} nameBack={'Đơn Hàng'} address={'DetailOrder'} />
@@ -100,13 +105,20 @@ function DetailOrder() {
 
                         </div>
                         <div className='flex-1'>
-                            <Button className='
-                                !text-red-600 !border-red-600
-                                hover:!bg-red-600 hover:!text-white
-                            '
-                            >
-                                Hủy Đơn
-                            </Button>
+                            <Link href={'/Order'}>
+                                <Button className='
+                                    !text-red-600 !border-red-600
+                                    hover:!bg-red-600 hover:!text-white
+                                '
+                                    onClick={() => {
+                                        handleCancelOrder()
+                                    }}
+
+                                >
+                                    Hủy Đơn
+                                </Button>
+
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,10 @@ function Sidebar() {
         return productTotal
     }
 
+    const OrderTotal = () => {
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        return orders.length;
+    };
     return (
         <>
             {/* <div className='w-full h-20'
@@ -33,8 +37,16 @@ function Sidebar() {
                     </Link>
 
                     <Link href={'/Order'}>
-                        <li><div className='text-lg flex items-center hover:text-amber-400'>
-                            <FileSearchOutlined className='mr-1' />Đơn Hàng
+                        <li><div className='text-lg flex items-center hover:text-amber-400 relative'>
+                            <FileSearchOutlined className='mr-1' />
+                            <span>
+
+                                Đơn Hàng
+                            </span>
+                            <span className='absolute bg-red-500 text-white -top-1 -right-4
+                                        text-xs rounded-full w-5 h-5 flex items-center justify-center'>
+                                {OrderTotal()}
+                            </span>
                         </div> </li>
 
                     </Link>
