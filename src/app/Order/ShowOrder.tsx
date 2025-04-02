@@ -5,6 +5,7 @@ import { Button, message } from 'antd';
 import Link from 'next/link';
 
 function ShowOrder() {
+
     interface order {
         id: number;
         customerName: string;
@@ -64,7 +65,7 @@ function ShowOrder() {
                         <div className="p-2">Chi tiết</div>
                     </div>
 
-                    {ListOrder.map((order: order) => (
+                    {[...ListOrder].reverse().map((order: order) => (
                         <>
                             <div className="grid grid-cols-6 border-b border-gray-200 hover:bg-gray-50 p-2">
                                 <div className="p-2">#{order.id}</div>
