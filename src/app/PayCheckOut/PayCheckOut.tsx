@@ -9,7 +9,7 @@ import { Button, Input, message } from "antd";
 
 function PayCheckOut() {
     const { state } = useCart();
-    // const total: number = parseFloat((price * quality).toFixed(4));
+    // const total: number = parseFloat((price * quantity).toFixed(4));
 
     const ProductTotal = () => {
         let productTotal: number = 0;
@@ -63,7 +63,7 @@ function PayCheckOut() {
 
             window.location.href = '/Order';
 
-        } catch (error) {
+        } catch {
             message.error('Đặt thất bại!!')
         }
     }
@@ -89,7 +89,7 @@ function PayCheckOut() {
                             key={product.id}
                             className={`w-full flex p-5 text-center ${state.products.indexOf(product) % 2 === 0 ? 'bg-gray-100' : ''}`}
                         >
-                            <span className='flex-2 text-start'>{product.name}</span>
+                            <span className='flex-2 text-start'>{product.title}</span>
                             <span className='flex-1'>$ {product.price}</span>
                             <span className='flex-1'>{product.quantity}</span>
                             <span className='flex-1 text-red-500'>

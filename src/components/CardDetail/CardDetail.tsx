@@ -5,7 +5,7 @@ import DetailPage from '@/components/DetailPage/DetailPage';
 // import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button, message } from 'antd';
-import { HeartOutlined, MinusOutlined, PlusOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
+import { MinusOutlined, PlusOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
 import { useCart } from '@/app/context/CartContext';
 import Link from 'next/link';
 
@@ -21,7 +21,7 @@ interface CardProps {
         rate: number;
         count: number;
     };
-
+    quantity: number;
 }
 
 
@@ -35,35 +35,37 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
         try {
             dispatch({
                 type: "ADD_PRODUCT",
-                payload: { image: image, category: category, id: productID, name: title, price: price, quantity: 1 }
+                payload: { image: image, category: category, id: productID, title: title, price: price, quantity: 1 }
             });
             message.success('Đã thêm vào giỏ hàng!!')
 
-        } catch (error) {
+        } catch {
             message.error('Thêm thất bại!!')
         }
 
         // console.log(typeof id)
     }
-    const [quality, setQuality] = React.useState<number>(1);
+    const [quantity, setQuantity] = React.useState<number>(1);
 
-    const hanldeDownQuality = () => {
-        setQuality((prevQuality) => Math.max(prevQuality - 1, 1));
+    const hanldeDownQuantity = () => {
+        setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
     }
-    const hanldeUpQuality = () => {
-        setQuality((prevQuality) => prevQuality + 1);
+    const hanldeUpQuantity = () => {
+        setQuantity((prevQuantity) => prevQuantity + 1);
     }
 
     React.useEffect(() => {
-        const savedQuality = localStorage.getItem(`product_${id}_quality`);
-        if (savedQuality) {
-            setQuality(Number(savedQuality));
+        const savedQuantity = localStorage.getItem(`product_${id}_quantity`);
+        if (savedQuantity) {
+            setQuantity(Number(savedQuantity));
         }
     }, [id]);
 
     React.useEffect(() => {
-        localStorage.setItem(`product_${id}_quality`, quality.toString());
-    }, [id, quality]);
+        localStorage.setItem(`product_${id}_quantity`, quantity.toString());
+    }, [id, quantity]);
+
+
     return (
 
         <>
@@ -110,19 +112,19 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                     </div>
                     <div className=' flex items-center justify-center' style={{ height: '25%' }}>
                         <div className='scale-150 w-40 mr-5'>
-                            <Button className={`scale-70 ${quality <= 1 ? '!cursor-not-allowed !text-gray-400 !border-none' : 'hover:!text-black hover:!border-black'}`}
+                            <Button className={`scale-70 ${quantity <= 1 ? '!cursor-not-allowed !text-gray-400 !border-none' : 'hover:!text-black hover:!border-black'}`}
                                 onClick={() => {
-                                    hanldeDownQuality()
+                                    hanldeDownQuantity()
                                 }}
-                                disabled={quality <= 1}
+                                disabled={quantity <= 1}
                             >
                                 <MinusOutlined />
                             </Button>
                             <span className='bg-amber-100 h-auto w-10 inline-block text-center rounded-md'>
-                                {quality}
+                                {quantity}
                             </span>
                             <Button className='scale-70 hover:!text-black hover:!border-black'
-                                onClick={() => hanldeUpQuality()}
+                                onClick={() => hanldeUpQuantity()}
                             >
                                 <PlusOutlined />
                             </Button>

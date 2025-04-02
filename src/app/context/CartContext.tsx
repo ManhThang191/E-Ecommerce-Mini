@@ -1,10 +1,10 @@
 "use client";
-import { message } from 'antd';
+// import { message } from 'antd';
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
 
 interface Product {
     id: number;
-    name: string;
+    title: string;
     price: number;
     quantity: number;
     // description : string;
@@ -17,10 +17,10 @@ interface CartState {
 }
 
 interface CartAction {
-    type: 'ADD_PRODUCT' | 'REMOVE_PRODUCT' | 'CLEAR_CART' | 'PLUS_QUALITY' | 'MINUS_QUALITY';
+    type: 'ADD_PRODUCT' | 'REMOVE_PRODUCT' | 'CLEAR_CART' | 'PLUS_QUANTITY' | 'MINUS_QUANTITY';
     payload?: Product;
 }
-const savedCartProducts = localStorage.getItem('cartProducts');
+const savedCartProducts = typeof window !== 'undefined' ? localStorage.getItem('cartProducts') : null;
 
 const initialState: CartState = {
     products: savedCartProducts ? JSON.parse(savedCartProducts) : [],
@@ -71,7 +71,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
             updatedProducts = [];
             break;
 
-        case 'PLUS_QUALITY':
+        case 'PLUS_QUANTITY':
             if (action.payload) {
                 const existingProduct = state.products.find(product => product.id === action.payload!.id);
                 updatedProducts = existingProduct
@@ -84,7 +84,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
             }
             break;
 
-        case 'MINUS_QUALITY':
+        case 'MINUS_QUANTITY':
             if (action.payload) {
                 const existingProduct = state.products.find(product => product.id === action.payload!.id);
                 updatedProducts = existingProduct

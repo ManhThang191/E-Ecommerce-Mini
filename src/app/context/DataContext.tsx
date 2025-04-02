@@ -30,13 +30,13 @@ const DataContext = createContext<{
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(dataReducer, { data: [] });
 
-useEffect(() => {
+  useEffect(() => {
     const urlAPI = 'https://fakestoreapi.com/products';
     // Gọi API lấy dữ liệu
-    axios.get(urlAPI) 
-        .then((response) => dispatch({ type: "SET_DATA", payload: response.data }))
-        .catch((err) => console.error("Error fetching data:", err));
-}, []);
+    axios.get(urlAPI)
+      .then((response) => dispatch({ type: "SET_DATA", payload: response.data }))
+      .catch((err) => console.error("Error fetching data:", err));
+  }, []);
 
   return <DataContext.Provider value={{ state, dispatch }}>{children}</DataContext.Provider>;
 };

@@ -1,7 +1,8 @@
 "use client";
 import React from 'react'
 import DetailPage from '@/components/DetailPage/DetailPage'
-import { Button } from 'antd';
+import { Button, message } from 'antd';
+import Link from 'next/link';
 
 function ShowOrder() {
     interface order {
@@ -15,7 +16,7 @@ function ShowOrder() {
 
         products: {
             id: number;
-            name: string;
+            title: string;
             quantity: number;
             price: number;
             image: string;
@@ -26,84 +27,66 @@ function ShowOrder() {
     const ListOrder = JSON.parse(localStorage.getItem('orders') || '[]');
     console.log(ListOrder)
 
+    const handleDelete = (id: number) => {
+        try {
+            const updatedOrders = ListOrder.filter((order: order) => order.id !== id);
+            const removedOrder = ListOrder.find((order: order) => order.id === id);
+
+            if (removedOrder) {
+                console.log('Removed Order:', removedOrder);
+            }
+
+            localStorage.setItem('orders', JSON.stringify(updatedOrders));
+            window.location.reload(); // Refresh to reflect changes
+
+        } catch {
+            message.error('Thất bại!!')
+        }
+
+    }
 
     return (
         <>
             <DetailPage name={'Lịch Sử Đơn Hàng'} nameBack={'Home'} address={'OrderPage'} />
 
-            {ListOrder.map((order: order) => (
-                <>
-                    <div className='max-w-250 min-h-50 m-auto p-2 rounded-xl
-                                flex mb-10 border-1 bg-blue-50
-                                '
-                        key={order.id}
-                    >
-                        <div className='flex-2 p-5 '>
-                            <h1 className=' text-2xl justify-between flex mb-5'>
-                                ĐƠN HÀNG
-                                <span className='text-xl mr-10'>{order.orderDate}</span>
-                            </h1>
-                            <div className='min-h-30'>
-                                {order.products.map((product) => (
-                                    <>
-                                        <div className='flex mb-2 '>
-                                            <span className='flex-4 mr-5'>
-                                                - {product.name}
-                                            </span>
-                                            <span className='flex-1'>
-                                                Sl : {product.quantity}
-                                            </span>
-                                            <span className='flex-1'>
-                                                $ {product.price} / 1 SP
-                                            </span>
-                                        </div>
-                                    </>
-                                ))}
 
-                            </div>
-                            <div className='flex'>
-                                <div className='flex-4 mr-5'>Tổng :</div>
-                                <div className='flex-1'>Sl : {order.totalQuantity}</div>
-                                <div className='flex-1 text-red-600'>$ {order.totalPrice}</div>
-                            </div>
-                        </div>
-                        <div className='flex-1 flex-col p-5 h-full'>
-                            <div className='flex-1 flex flex-col justify-between'>
-                                <div className='w-full min-h-20 flex items-center'>
-                                    <span>
-                                        Từ :
-                                    </span>
-                                    <div className='ml-4'>
-                                        Nhà cung cấp
-                                    </div>
-                                </div>
-                                <div className='flex-1 min-h-40 max-h-45 flex flex-col justify-center'>
-                                    <span>Đến : </span>
-                                    <span>
-                                        <ul className='ml-4'>
-                                            <li>Địa Chỉ : {order.customerAddress}</li>
-                                            <li>Tên : {order.customerName}</li>
-                                            <li>SĐT : {order.customerPhone}</li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <div className='flex h-full mt-5 items-center'>
-                                    <Button className='!m-auto hover:!text-white hover:!bg-red-400 hover:!border-red-400 hover:!scale-103 '>
-                                        Hủy Đơn
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                        {/* <div className='flex-1'>
-                            <span>
-                                Tổng : $ {order.totalPrice}
-                            </span>
-                        </div> */}
 
+            <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+                <h1 className="text-2xl font-bold mb-4">Danh sách đơn hàng</h1>
+
+                <div className="overflow-x-auto">
+                    <div className="grid grid-cols-6 bg-gray-100 p-2 font-bold border-b border-gray-200">
+                        <div className="p-2">Mã đơn</div>
+                        <div className="p-2">Khách hàng</div>
+                        <div className="p-2">Ngày đặt</div>
+                        <div className="p-2">Số Lượng</div>
+                        <div className="p-2">Tổng tiền</div>
+                        <div className="p-2">Chi tiết</div>
                     </div>
-                </>
-            ))}
 
+                    {ListOrder.map((order: order) => (
+                        <>
+                            <div className="grid grid-cols-6 border-b border-gray-200 hover:bg-gray-50 p-2">
+                                <div className="p-2">#{order.id}</div>
+                                <div className="p-2">{order.customerName}</div>
+                                <div className="p-2">{order.orderDate}</div>
+                                <div className="p-2 text-green-600 ">{order.totalQuantity}</div>
+                                <div className="p-2 text-red-600">$ {order.totalPrice}</div>
+                                <div className="p-2">
+                                    <Link href={`/DetailOrder/${order.id}`}>
+                                        <Button className="!bg-blue-500 !text-white px-3 !py-1 rounded">Xem</Button>
+                                    </Link>
+                                </div>
+                            </div>
+
+                        </>
+
+                    ))}
+
+
+
+                </div>
+            </div>
 
         </>
     )

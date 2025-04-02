@@ -13,46 +13,46 @@ interface PropCartList {
     id: number,
     title: string,
     image: string,
-    quality: number,
+    quantity: number,
     price: number,
     category: string
 }
 
-function CartList({ id, image, title, price, category, quality }: PropCartList) {
+function CartList({ id, image, title, price, category, quantity }: PropCartList) {
 
 
     // const { state } = useCart()
     // console.log(state)
     // const ProductList = state.products
     // console.log(ProductList)
-    const total: number = parseFloat((price * quality).toFixed(2));
+    const total: number = parseFloat((price * quantity).toFixed(2));
     // console.log(typeof total)
-    const { state, dispatch } = useCart()
+    const { dispatch } = useCart()
 
     const handleDeleteToCart = (productID: number) => {
 
         dispatch({
             type: "REMOVE_PRODUCT",
-            payload: { image: image, category: category, id: productID, name: title, price: price, quantity: 1 }
+            payload: { image: image, category: category, id: productID, title: title, price: price, quantity: 1 }
         });
 
         // console.log(typeof id)
     }
-    const hanldeUpQuality = (productID: number) => {
+    const hanldeUpQuantity = (productID: number) => {
 
         dispatch({
-            type: "PLUS_QUALITY",
-            payload: {image:image,category: category, id: productID, name: title, price: price, quantity: 1 }
+            type: "PLUS_QUANTITY",
+            payload: { image: image, category: category, id: productID, title: title, price: price, quantity: 1 }
         });
 
         // console.log(typeof id)
     }
 
-    const hanldeDownQuality = (productID: number) => {
+    const hanldeDownQuantity = (productID: number) => {
 
         dispatch({
-            type: "MINUS_QUALITY",
-            payload: {image:image,category: category, id: productID, name: title, price: price, quantity: 1 }
+            type: "MINUS_QUANTITY",
+            payload: { image: image, category: category, id: productID, title: title, price: price, quantity: 1 }
         });
 
         // console.log(typeof id)
@@ -62,7 +62,7 @@ function CartList({ id, image, title, price, category, quality }: PropCartList) 
         <>
             <div className='w-full max-w-5xl h-auto m-auto 
                             last:mb-8 mt-5 border border-gray-300 flex flex-wrap 
-                            rounded-2xl text-center items-center p-4 shadow-lg ' 
+                            rounded-2xl text-center items-center p-4 shadow-lg '
             >
                 <div className='w-full flex flex-wrap sm:flex-nowrap justify-between items-center'>
                     <div className='w-full sm:w-1/6 flex justify-center mb-4 sm:mb-0'>
@@ -88,19 +88,19 @@ function CartList({ id, image, title, price, category, quality }: PropCartList) 
                     <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center'>$ {price}</div>
                     <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center  scale-130'>
 
-                        <Button className={`scale-70 ${quality <= 1 ? '!cursor-not-allowed !text-gray-400 !border-none' : 'hover:!text-black hover:!border-black'}`}
+                        <Button className={`scale-70 ${quantity <= 1 ? '!cursor-not-allowed !text-gray-400 !border-none' : 'hover:!text-black hover:!border-black'}`}
                             onClick={() => {
-                                hanldeDownQuality(id)
+                                hanldeDownQuantity(id)
                             }}
-                            disabled={quality <= 1}
+                            disabled={quantity <= 1}
                         >
                             <MinusOutlined />
                         </Button>
                         <span className='bg-amber-100 h-auto w-10 inline-block text-center rounded-md'>
-                            {quality}
+                            {quantity}
                         </span>
                         <Button className='scale-70 hover:!text-black hover:!border-black'
-                            onClick={() => hanldeUpQuality(id)}
+                            onClick={() => hanldeUpQuantity(id)}
                         >
                             <PlusOutlined />
                         </Button>
@@ -115,15 +115,15 @@ function CartList({ id, image, title, price, category, quality }: PropCartList) 
                                  '
                             onClick={() => {
                                 handleDeleteToCart(id);
-                                
+
                             }
                             }
                         >
                             Xóa
                         </Button>
-                    
-                            
-                        
+
+
+
                     </div>
                 </div>
             </div>

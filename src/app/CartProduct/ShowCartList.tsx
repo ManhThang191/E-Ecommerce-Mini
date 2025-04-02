@@ -12,12 +12,14 @@ function ShowCartList() {
 
   const ProductTotal = () => {
     let productTotal: number = 0;
+
     state.products.forEach((product) => {
       productTotal += product.quantity;
     });
 
     return productTotal;
   }
+  // console.log(ProductTotal())
 
   const PriceTotal = () => {
     let priceTotal: number = 0;
@@ -41,16 +43,14 @@ function ShowCartList() {
         <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center'>Thao tác</div>
       </div>
       {state.products.length > 0 ? (
-        state.products.map((product: any) => (
+        state.products.map((product) => (
           <CartList
             key={product.id}
             id={product.id}
-            title={product.name}
+            title={product.title}
             price={product.price}
             image={product.image}
-
-            quality={product.quantity}
-
+            quantity={product.quantity}
             category={product.category}
           />
         ))
@@ -76,37 +76,16 @@ function ShowCartList() {
 
               <Link href={'/PayCheckOut'}>
                 <Button className='mr-10 scale-130 !border-black 
-                          hover:!scale-145 hover:!text-blue-800 hover:!text-red-700'>
+                          hover:!scale-145 hover:!text-blue-800 '>
                   Đặt Hàng
                 </Button>
-
               </Link>
             </div>
-
           </div >
         </>
       ) : (
         null
       )}
-
-      {/* <div className='sticky bottom-0'>
-        <div className=' w-full max-w-5xl flex flex-col sm:flex-row 
-                        justify-between items-center text-center h-35 
-                        m-auto p-10 rounded-2xl bg-cyan-900 text-white text-2xl mt-10 mb-10'>
-          <div className='mb-4 sm:mb-0'>
-            Tổng cộng ( <span className='text-amber-200'>{ProductTotal()}</span> sản phẩm ) : <span className='text-amber-200'>$ {PriceTotal()}</span>
-          </div>
-
-          <Link href={'/PayCheckOut'}>
-            <Button className='mr-10 scale-130 !border-black 
-                          hover:!scale-145 hover:!text-blue-800 hover:!text-red-700'>
-              Đặt Hàng
-            </Button>
-
-          </Link>
-        </div>
-
-      </div > */}
     </>
   )
 }
