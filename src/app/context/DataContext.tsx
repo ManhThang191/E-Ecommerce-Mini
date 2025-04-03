@@ -11,24 +11,24 @@ type StateType = {
 type ActionType = { type: "SET_DATA"; payload: unknown[] };
 
 // Reducer quản lý state
-const dataReducer = (state: StateType, action: ActionType): StateType => {
+const dataReducer = (stateData: StateType, action: ActionType): StateType => {
   switch (action.type) {
     case "SET_DATA":
-      return { ...state, data: action.payload };
+      return { ...stateData, data: action.payload };
     default:
-      return state;
+      return stateData;
   }
 };
 
 // Tạo Context
 const DataContext = createContext<{
-  state: StateType;
+  stateData: StateType;
   dispatch: React.Dispatch<ActionType>;
 } | null>(null);
 
 // Provider Component
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(dataReducer, { data: [] });
+  const [stateData, dispatch] = useReducer(dataReducer, { data: [] });
 
   useEffect(() => {
     const urlAPI = 'https://fakestoreapi.com/products';
@@ -38,7 +38,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       .catch((err) => console.error("Error fetching data:", err));
   }, []);
 
-  return <DataContext.Provider value={{ state, dispatch }}>{children}</DataContext.Provider>;
+  return <DataContext.Provider value={{ stateData, dispatch }}>{children}</DataContext.Provider>;
 };
 
 // Hook để sử dụng dữ liệu

@@ -1,9 +1,11 @@
 "use client";
 import React from 'react'
-import { Button } from 'antd';
+import { Button, message, Select } from 'antd';
 import { LeftOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import Link from 'next/link';
 import { useCart } from '@/app/context/CartContext';
+import { useData } from '@/app/context/DataContext';
+
 
 interface DetailPageProps {
   name: string;
@@ -11,17 +13,29 @@ interface DetailPageProps {
   address: string;
 }
 
-function DetailPage({ name, nameBack, address }: DetailPageProps) {
 
-  const { state } = useCart()
+function DetailPage({ name, nameBack, address }: DetailPageProps) {
+  const { stateCart } = useCart()
   const ProductTotal = () => {
     let productTotal: number = 0;
-    state.products.forEach((product) => {
+    stateCart.products.forEach((product) => {
       productTotal += product.quantity;
     });
     return productTotal
   }
 
+  const { dispatch } = useData()
+  const getAPI = async (value: string) => {
+    try {
+      const response = await fetch(`https://fakestoreapi.com/products${value !== 'all' ? `/category/${value}` : ''}`);
+      const data = await response.json();
+      // Assuming you have a dispatch function in your CartContext to update the state
+      dispatch({ type: 'SET_DATA', payload: data });
+    } catch (error) {
+      console.error('Error fetching API:', error);
+      message.error('Thất bại!')
+    }
+  }
 
   return (
     <>
@@ -48,12 +62,11 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
         {address == "DetailOrder" ? (
           <>
             <div className="ml-auto">
+
               <Button className='hover:!text-black hover:!border-black'>
                 <Link href={'/Order'} >
                   <LeftOutlined /> {nameBack}
-
                 </Link>
-
               </Button>
             </div>
           </>
@@ -61,14 +74,30 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
 
         {address == "Home" ? (
           <>
-            <div className="ml-auto">
-              <Button className='hover:!text-black hover:!border-black'>
+            <div className="ml-auto flex items-center space-x-4">
+              <div>
+                {/* <Input className='w-full md:w-72' suffix={<FilterOutlined />} placeholder='Tìm theo phân loại?' /> */}
+                <Select
+                  placeholder={'Tìm theo Loại'}
+                  onChange={(value) => (
+                    getAPI(value)
+                  )}
+                  className='w-full md:w-40'
+                >
+                  <Select.Option value="all">All</Select.Option>
+                  <Select.Option value="men&#39;s clothing">Men&#39;s Clothing</Select.Option>
+                  <Select.Option value="jewelery" >Jewelery</Select.Option>
+                  <Select.Option value="electronics" >Electronics</Select.Option>
+                  <Select.Option value="women&#39;s clothing" >Women&#39;s Clothing</Select.Option>
+                </Select>
+              </div>
+
+              <Button className='hover:!text-black hover:!border-black relative'>
                 <Link href={'/CartProduct'} >
                   <ShoppingCartOutlined /> {nameBack}
-
                 </Link>
                 <span className='absolute bg-red-500 text-white -top-3 -right-2
-                               text-xs rounded-xl w-5 h-5 flex items-center justify-center'>
+                       text-xs rounded-xl w-5 h-5 flex items-center justify-center'>
                   {ProductTotal()}
                 </span>
               </Button>

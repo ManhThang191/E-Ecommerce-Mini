@@ -1,20 +1,20 @@
 "use client";
-import React from 'react'
+import React, { useState } from 'react'
 // import 'antd' from 'antd'
 import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined } from '@ant-design/icons'
-import { Input } from 'antd';
+import { AutoComplete, Input } from 'antd';
 import Link from "next/link";
 import { useCart } from '@/app/context/CartContext';
-
+import { useData } from '@/app/context/DataContext';
 
 function Sidebar() {
 
-    const { state } = useCart();
+    const { stateCart } = useCart();
     // console.log(state.products);
 
     const ProductTotal = () => {
         let productTotal: number = 0;
-        state.products.forEach((product) => {
+        stateCart.products.forEach((product) => {
             productTotal += product.quantity;
         });
         return productTotal
@@ -24,6 +24,26 @@ function Sidebar() {
         const orders = JSON.parse(localStorage.getItem('orders') || '[]');
         return orders.length;
     };
+
+    const { stateData } = useData()
+    // console.log(stateData.data)
+    const suggestions: string[] = stateData.data.map((product: any) => (product.title))
+    console.log(suggestions)
+
+    const [inputValue, setInputValue] = useState("");
+    const [options, setOptions] = useState<{ value: string }[]>([]);
+
+    const handleChange = (value: string) => {
+        setInputValue(value);
+        setOptions(
+            value
+                ? suggestions
+                    .filter((item) => item.toLowerCase().includes(value.toLowerCase()))
+                    .map((item) => ({ value: item }))
+                : []
+        );
+
+    }
     return (
         <>
             {/* <div className='w-full h-20'
@@ -52,7 +72,18 @@ function Sidebar() {
                     </Link>
 
                     <li className="relative flex items-center w-full md:w-auto">
-                        <Input className='w-full md:w-72' suffix={<SearchOutlined />} placeholder='Bạn muốn tìm gì?' />
+                        <AutoComplete
+                            options={options}
+                            value={inputValue}
+                            onChange={handleChange}
+                        >
+                            <Input className='w-full md:w-72' suffix={<SearchOutlined />} placeholder='Bạn muốn tìm gì?'
+
+                            >
+
+                            </Input>
+
+                        </AutoComplete>
                     </li>
 
                     <Link href={'/ProductFav'}>
