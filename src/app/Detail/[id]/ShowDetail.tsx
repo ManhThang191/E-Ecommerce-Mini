@@ -22,8 +22,8 @@ function ShowDetail() {
     // const { state }: { state: { data: product[] } } = useData();
     // const ProductDetail = state.data;
 
-    const { state } = useData();
-    const ProductDetail = state.data as product[];
+    const { stateData } = useData();
+    const ProductDetail = stateData.data as product[];
     // const ProductDetail = state.data;
 
     const products = ProductDetail.find((item: product) => item.id === parseInt(id));

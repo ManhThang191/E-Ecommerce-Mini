@@ -18,8 +18,8 @@ function BuyNow() {
     const id: string = useParams().id as string;
     // console.log(id)
 
-    const { state } = useData();
-    const ProductDetail = state.data as product[];
+    const { stateData } = useData();
+    const ProductDetail = stateData.data as product[];
     // const ProductDetail = state.data;
 
     const products = ProductDetail.find((item: product) => item.id === parseInt(id));

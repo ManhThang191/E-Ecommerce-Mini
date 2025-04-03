@@ -28,23 +28,7 @@ function ShowOrder() {
     const ListOrder = JSON.parse(localStorage.getItem('orders') || '[]');
     console.log(ListOrder)
 
-    const handleDelete = (id: number) => {
-        try {
-            const updatedOrders = ListOrder.filter((order: order) => order.id !== id);
-            const removedOrder = ListOrder.find((order: order) => order.id === id);
 
-            if (removedOrder) {
-                console.log('Removed Order:', removedOrder);
-            }
-
-            localStorage.setItem('orders', JSON.stringify(updatedOrders));
-            window.location.reload(); // Refresh to reflect changes
-
-        } catch {
-            message.error('Thất bại!!')
-        }
-
-    }
 
     return (
         <>

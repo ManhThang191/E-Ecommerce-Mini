@@ -1,9 +1,12 @@
-// "use client";
+"use client";
 import ProductList from "./context/ProductList";
 
 
 
 export default function Home() {
+
+
+
   return (
     <>
       <div className="min-h-screen w-full">

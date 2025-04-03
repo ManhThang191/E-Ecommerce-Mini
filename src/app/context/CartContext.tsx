@@ -27,44 +27,44 @@ const initialState: CartState = {
 };
 // console.log(initialState)
 const CartContext = createContext<{
-    state: CartState;
+    stateCart: CartState;
     dispatch: React.Dispatch<CartAction>;
 }>({
-    state: initialState,
+    stateCart: initialState,
     dispatch: () => null,
 });
 
 
-const cartReducer = (state: CartState, action: CartAction): CartState => {
+const cartReducer = (stateCart: CartState, action: CartAction): CartState => {
     let updatedProducts: Product[] = [];
 
     switch (action.type) {
         case 'ADD_PRODUCT':
             if (action.payload) {
-                const existingProduct = state.products.find(product => product.id === action.payload!.id);
+                const existingProduct = stateCart.products.find(product => product.id === action.payload!.id);
                 updatedProducts = existingProduct
-                    ? state.products.map(product =>
+                    ? stateCart.products.map(product =>
                         product.id === action.payload!.id
                             ? { ...product, quantity: product.quantity + action.payload!.quantity }
                             : product
                     )
-                    : [...state.products, { ...action.payload, quantity: action.payload.quantity }];
+                    : [...stateCart.products, { ...action.payload, quantity: action.payload.quantity }];
             } else {
                 // message.success('Product added successfully!', 3);
                 // console.log('add ')
-                // message.success(`${state.products} đã được thêm vào giỏ hàng!`);
-                updatedProducts = state.products;
+                // message.success(`${stateCart.products} đã được thêm vào giỏ hàng!`);
+                updatedProducts = stateCart.products;
             }
 
             break;
 
         case 'REMOVE_PRODUCT':
             if (action.payload) {
-                updatedProducts = state.products.filter(product => product.id !== action.payload!.id);
+                updatedProducts = stateCart.products.filter(product => product.id !== action.payload!.id);
             } else {
-                updatedProducts = state.products;
+                updatedProducts = stateCart.products;
             }
-            // console.log(initialState)
+            // console.log(initialstateCart)
             break;
 
         case 'CLEAR_CART':
@@ -73,53 +73,53 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
         case 'PLUS_QUANTITY':
             if (action.payload) {
-                const existingProduct = state.products.find(product => product.id === action.payload!.id);
+                const existingProduct = stateCart.products.find(product => product.id === action.payload!.id);
                 updatedProducts = existingProduct
-                    ? state.products.map(product =>
+                    ? stateCart.products.map(product =>
                         product.id === action.payload!.id
                             ? { ...product, quantity: product.quantity + action.payload!.quantity }
                             : product
                     )
-                    : [...state.products, { ...action.payload, quantity: action.payload.quantity }];
+                    : [...stateCart.products, { ...action.payload, quantity: action.payload.quantity }];
             }
             break;
 
         case 'MINUS_QUANTITY':
             if (action.payload) {
-                const existingProduct = state.products.find(product => product.id === action.payload!.id);
+                const existingProduct = stateCart.products.find(product => product.id === action.payload!.id);
                 updatedProducts = existingProduct
-                    ? state.products.map(product =>
+                    ? stateCart.products.map(product =>
                         product.id === action.payload!.id
                             ? { ...product, quantity: product.quantity - action.payload!.quantity }
                             : product
                     )
-                    : [...state.products, { ...action.payload, quantity: action.payload.quantity }];
+                    : [...stateCart.products, { ...action.payload, quantity: action.payload.quantity }];
             }
             break;
         default:
-            updatedProducts = state.products;
+            updatedProducts = stateCart.products;
             break;
     }
 
     // Save updated products to localStorage
     localStorage.setItem('cartProducts', JSON.stringify(updatedProducts));
-    // console.log(initialState)
+    // console.log(initialstateCart)
     return {
-        ...state,
+        ...stateCart,
         products: updatedProducts,
 
     };
 
 };
 
-// console.log(initialState)
+// console.log(initialstateCart)
 
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-    const [state, dispatch] = useReducer(cartReducer, initialState);
+    const [stateCart, dispatch] = useReducer(cartReducer, initialState);
 
     return (
-        <CartContext.Provider value={{ state, dispatch }}>
+        <CartContext.Provider value={{ stateCart, dispatch }}>
             {children}
         </CartContext.Provider>
     );

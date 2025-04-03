@@ -2,19 +2,13 @@
 import Card from "@/components/Card/Card";
 import DetailPage from "@/components/DetailPage/DetailPage";
 import { useData } from "./DataContext";
+import { Select } from "antd";
+// import { useEffect, useState } from "react";
+
 
 
 const ProductList = () => {
-  // const [products, setProducts] = useState([]);
-  // const urlAPI = 'https://fakestoreapi.com/products';
-
-  // useEffect(() => {
-  //   axios.get(urlAPI)
-  //     .then((response) => setProducts(response.data))
-  //     .catch((error) => console.error("Error fetching data:", error));
-  // }, []);
-
-  const { state } = useData()
+  const { stateData } = useData();
 
   interface Product {
     id: number;
@@ -22,23 +16,27 @@ const ProductList = () => {
     price: number;
     image: string;
     description: string;
-    rating: number;
+    rating: {
+      rate: number;
+      count: number
+    };
     category: string;
-    quantity: number
+
   }
 
-  const productsList: Product[] = state.data as Product[]
+  const productsList: Product[] = stateData.data as Product[];
 
-  const idUnique = Date.now();
+
+
 
   return (
     <>
-      <DetailPage name={'Sản Phẩm'} nameBack="Giỏ Hàng" address={'Home'} />
+      <DetailPage name={"Sản Phẩm"} nameBack="Giỏ Hàng" address={"Home"} />
 
       <div className="list_product grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         {productsList.map((product) => (
           <Card
-            key={idUnique}
+            key={product.id}
             id={product.id}
             title={product.title}
             price={product.price}
@@ -49,10 +47,7 @@ const ProductList = () => {
 
           />
         ))}
-
-
       </div>
-
     </>
   );
 };

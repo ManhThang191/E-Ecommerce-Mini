@@ -8,12 +8,12 @@ import { Button, Input, message } from "antd";
 
 
 function PayCheckOut() {
-    const { state } = useCart();
+    const { stateCart } = useCart();
     // const total: number = parseFloat((price * quantity).toFixed(4));
 
     const ProductTotal = () => {
         let productTotal: number = 0;
-        state.products.forEach((product) => {
+        stateCart.products.forEach((product) => {
             productTotal += product.quantity;
         });
 
@@ -23,7 +23,7 @@ function PayCheckOut() {
     const PriceTotal = () => {
         let priceTotal: number = 0;
 
-        state.products.map((product) => {
+        stateCart.products.map((product) => {
             priceTotal += parseFloat((product.price * product.quantity).toFixed(3));
         });
 
@@ -43,7 +43,7 @@ function PayCheckOut() {
                 customerName: name,
                 customerPhone: phone,
                 customerAddress: address,
-                products: state.products,
+                products: stateCart.products,
                 totalQuantity: ProductTotal(),
                 totalPrice: PriceTotal(),
                 orderDate: ''
@@ -84,10 +84,10 @@ function PayCheckOut() {
                         <div className='flex-1'>SỐ LƯỢNG</div>
                         <div className='flex-1'>THÀNH GIÁ</div>
                     </div>
-                    {state.products.map((product) => (
+                    {stateCart.products.map((product) => (
                         <div
                             key={product.id}
-                            className={`w-full flex p-5 text-center ${state.products.indexOf(product) % 2 === 0 ? 'bg-gray-100' : ''}`}
+                            className={`w-full flex p-5 text-center ${stateCart.products.indexOf(product) % 2 === 0 ? 'bg-gray-100' : ''}`}
                         >
                             <span className='flex-2 text-start'>{product.title}</span>
                             <span className='flex-1'>$ {product.price}</span>

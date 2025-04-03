@@ -17,7 +17,6 @@ interface CardProps {
         count: number;
     };
     category: string;
-    quantity: number;
 }
 
 function Card({ id, title, price, image, category, description, rating }: CardProps) {
@@ -38,6 +37,7 @@ function Card({ id, title, price, image, category, description, rating }: CardPr
 
 
     }
+
 
     return (
 

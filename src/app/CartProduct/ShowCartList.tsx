@@ -7,13 +7,13 @@ import { Button } from 'antd';
 import Link from 'next/link';
 
 function ShowCartList() {
-  const { state } = useCart();
+  const { stateCart } = useCart();
   // console.log(state.products);
 
   const ProductTotal = () => {
     let productTotal: number = 0;
 
-    state.products.forEach((product) => {
+    stateCart.products.forEach((product) => {
       productTotal += product.quantity;
     });
 
@@ -24,7 +24,7 @@ function ShowCartList() {
   const PriceTotal = () => {
     let priceTotal: number = 0;
 
-    state.products.map((product) => {
+    stateCart.products.map((product) => {
       priceTotal += parseFloat((product.price * product.quantity).toFixed(3));
     });
 
@@ -42,8 +42,8 @@ function ShowCartList() {
         <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center'>Tổng Giá</div>
         <div className='w-full sm:w-1/6 mb-4 sm:mb-0 text-center'>Thao tác</div>
       </div>
-      {state.products.length > 0 ? (
-        state.products.map((product) => (
+      {stateCart.products.length > 0 ? (
+        stateCart.products.map((product) => (
           <CartList
             key={product.id}
             id={product.id}
@@ -64,7 +64,7 @@ function ShowCartList() {
       )
       }
 
-      {state.products.length > 0 ? (
+      {stateCart.products.length > 0 ? (
         <>
           <div className='sticky bottom-0'>
             <div className=' w-full max-w-5xl flex flex-col sm:flex-row 
