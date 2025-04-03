@@ -2,7 +2,8 @@
 import React from 'react'
 import CartList from '@/components/CartList/CartList'
 import DetailPage from '@/components/DetailPage/DetailPage';
-import { useCart } from '../context/CartContext';
+import { useCart } from '@/app/context/CartContext';
+
 import { Button } from 'antd';
 import Link from 'next/link';
 
