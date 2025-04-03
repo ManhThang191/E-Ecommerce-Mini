@@ -42,7 +42,7 @@ function Card({ id, title, price, image, category, description, rating }: CardPr
     return (
 
         <Link href={`/Detail/${id}`} className="h-auto hover:transform hover:scale-105 duration-300">
-            <div className="card object-cover w-60 h-full border border-gray-300
+            <div id={`product-${id}`} className="card object-cover w-60 h-full border border-gray-300
                  rounded-lg p-2.5 m-1.5 flex flex-col justify-between cursor-pointer shadow-lg">
                 <Image src={image} alt={title} width={0} height={0}
                     className="card_img w-3/5 h-auto m-auto rounded-lg object-cover"

@@ -72,7 +72,7 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
             <DetailPage name={'Chi Tiết Sản Phẩm'} nameBack={'Home'} address={'Detail'}>
 
             </DetailPage>
-            <div className='m-auto w-250 h-130 flex text-center rounded-xl border-1 overflow-hidden '
+            <div className='m-auto w-250 h-130 flex text-center rounded-xl border-0 overflow-hidden shadow-lg'
 
             >
                 <div className='flex-1 w-full h-full relative'>
@@ -103,8 +103,8 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                                 Category : {category}
                             </span>
                         </div>
-                        <div className='flex items-start w-full'>
-                            <span className='text-left '>
+                        <div className='flex items-start w-full max-h-52 overflow-y-auto'>
+                            <span className='text-left break-words'>
                                 {description}
                             </span>
                         </div>
