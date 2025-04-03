@@ -6,6 +6,7 @@ import { HeartOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/i
 import Link from 'next/link';
 import { useCart } from '@/app/context/CartContext';
 
+
 interface CardProps {
     id: number;
     title: string;

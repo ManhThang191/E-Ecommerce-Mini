@@ -2,7 +2,9 @@
 import React, { useState } from 'react'
 import DetailPage from '@/components/DetailPage/DetailPage'
 // import CardUserCheckOut from '@/components/CardUserCheckOut/CardUserCheckOut'
-import { useCart } from '../context/CartContext'
+import { useCart } from '@/app/context/CartContext';
+
+
 import { Button, Input, message } from "antd";
 
 
@@ -46,7 +48,8 @@ function PayCheckOut() {
                 products: stateCart.products,
                 totalQuantity: ProductTotal(),
                 totalPrice: PriceTotal(),
-                orderDate: ''
+                orderDate: '',
+                isDeliver: true
             };
             const orderDate = new Date().toLocaleDateString();
             orderDetails.orderDate = orderDate;

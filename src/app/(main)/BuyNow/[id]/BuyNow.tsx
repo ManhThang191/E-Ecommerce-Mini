@@ -47,7 +47,8 @@ function BuyNow() {
                 products: [products],
                 totalQuantity: 0,
                 totalPrice: 0,
-                orderDate: ''
+                orderDate: '',
+                isDeliver: true,
             };
             orderDetails.totalPrice = (products?.price ?? 0) * quantity
             orderDetails.totalQuantity = parseInt(localStorage.getItem(`product_${id}_quantity`) || '1')

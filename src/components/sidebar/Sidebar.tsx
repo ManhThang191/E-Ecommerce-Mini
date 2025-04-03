@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import 'antd' from 'antd'
 import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined, ArrowUpOutlined } from '@ant-design/icons'
 import { AutoComplete, Input, message } from 'antd';
 import Link from "next/link";
 import { useCart } from '@/app/context/CartContext';
+
 import { useData } from '@/app/context/DataContext';
+
 
 function Sidebar() {
 
@@ -20,9 +22,33 @@ function Sidebar() {
         return productTotal
     }
 
+    // const OrderTotal = () => {
+
+    //     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    //     return orders.length;
+    // };
     const OrderTotal = () => {
-        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-        return orders.length;
+        const [orderCount, setOrderCount] = useState(0);
+
+        useEffect(() => {
+            const updateOrderCount = () => {
+                const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                setOrderCount(orders.length);
+            };
+
+            // Gọi hàm ngay khi component mount
+            updateOrderCount();
+
+            // Theo dõi sự thay đổi của localStorage
+            window.addEventListener('storage', updateOrderCount);
+
+            // Dọn dẹp khi component unmount
+            return () => {
+                window.removeEventListener('storage', updateOrderCount);
+            };
+        }, [orderCount]);
+
+        return orderCount;
     };
 
     const { stateData } = useData()
@@ -129,10 +155,18 @@ function Sidebar() {
 
                     </Link>
                     <li>
-                        <a href="#" className='text-lg flex items-center'>
+                        {/* <a href="#" className='text-lg flex items-center'>
                             <LoginOutlined className='mr-2' />
-                            Login/Log out
-                        </a>
+                            Login
+                        </a> */}
+
+                        <Link href={'/Login'}>
+                            <div className='text-lg flex items-center hover:text-amber-400'>
+                                <LoginOutlined className='mr-2' />
+                                Log out
+                            </div>
+
+                        </Link>
                     </li>
                 </ul>
 

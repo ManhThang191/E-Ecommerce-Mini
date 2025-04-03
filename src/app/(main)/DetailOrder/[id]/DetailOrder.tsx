@@ -3,7 +3,7 @@ import DetailPage from '@/components/DetailPage/DetailPage'
 import { Button, message } from 'antd'
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import React from 'react'
+import React, { useState } from 'react'
 
 function DetailOrder() {
 
@@ -15,7 +15,7 @@ function DetailOrder() {
         orderDate: string;
         totalQuantity: number;
         totalPrice: number;
-
+        isDeliver: boolean;
         products: {
             id: number;
             title: string;
@@ -56,6 +56,27 @@ function DetailOrder() {
         }
 
     };
+    const handleTakeOrder = (value: boolean) => {
+        // const [isDeliverState, setIsDeiverState] = useState<boolean>()
+        try {
+            if (!orderDetail) {
+                message.error('Không thấy đơn hàng!!')
+                return;
+            }
+            const updatedOrders = orders.map(order =>
+                order.id === orderDetail.id ? { ...order, isDeliver: value } : order
+            );
+
+            // Cập nhật state và localStorage
+            setOrders(updatedOrders);
+            localStorage.setItem('orders', JSON.stringify(updatedOrders));
+
+            message.success('Nhận thành công!')
+        } catch {
+            message.error('Nhận thất bại!')
+        }
+
+    }
 
     return (
         <>
@@ -67,13 +88,22 @@ function DetailOrder() {
             >
 
 
-                <h1 className='mb-4 border-b border-gray-300'>THÔNG TIN ĐƠN HÀNG : #{orderDetail ? orderDetail.id : 'N/A'}</h1>
+                <h1 className='mb-4 border-b border-gray-300'>
+                    THÔNG TIN ĐƠN HÀNG #{orderDetail ? orderDetail.id : 'N/A'}
 
+                </h1>
+                {orderDetail?.isDeliver ? (
+                    <div className='pl-10 text-orange-300 text-xl'>- Đang giao -</div>
+                ) : (
+                    <div className='pl-10 text-green-600 text-xl'>- Hoàn thành -</div>
+
+                )}
                 <div className='border-b border-gray-300 pb-5 pl-10'>
                     <span>Ngày : {orderDetail?.orderDate}</span> <br />
                     <span>Người Đặt : {orderDetail?.customerName}</span><br />
                     <span>SĐT : {orderDetail?.customerPhone}</span><br />
                     <span>Địa Chỉ : {orderDetail?.customerAddress}</span>
+
                 </div>
                 <div className=''>
                     <div className='flex w-full p-5 text-center'>
@@ -104,6 +134,30 @@ function DetailOrder() {
                         <div className='flex-4'>
 
                         </div>
+
+                        {orderDetail?.isDeliver ? (
+                            <>
+                                <div className='flex-1'>
+                                    <Link href={`/DetailOrder/${id}`}>
+                                        <Button className='
+                                    !text-green-600 !border-green-600
+                                    hover:!bg-green-600 hover:!text-white
+                                '
+                                            onClick={() => {
+                                                handleTakeOrder(false)
+                                            }}
+
+                                        >
+                                            Đã nhận
+                                        </Button>
+
+                                    </Link>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                            </>
+                        )}
                         <div className='flex-1'>
                             <Link href={'/Order'}>
                                 <Button className='
@@ -120,6 +174,8 @@ function DetailOrder() {
 
                             </Link>
                         </div>
+
+
                     </div>
                 </div>
             </div>
