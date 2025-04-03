@@ -25,6 +25,7 @@ function DetailPage({ name, nameBack, address }: DetailPageProps) {
   }
 
   const { dispatch } = useData()
+
   const getAPI = async (value: string) => {
     try {
       const response = await fetch(`https://fakestoreapi.com/products${value !== 'all' ? `/category/${value}` : ''}`);

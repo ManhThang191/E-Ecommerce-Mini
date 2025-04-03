@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from 'react'
 // import 'antd' from 'antd'
-import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined } from '@ant-design/icons'
-import { AutoComplete, Input } from 'antd';
+import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined, ArrowUpOutlined } from '@ant-design/icons'
+import { AutoComplete, Input, message } from 'antd';
 import Link from "next/link";
 import { useCart } from '@/app/context/CartContext';
 import { useData } from '@/app/context/DataContext';
@@ -28,7 +28,7 @@ function Sidebar() {
     const { stateData } = useData()
     // console.log(stateData.data)
     const suggestions: string[] = stateData.data.map((product: any) => (product.title))
-    console.log(suggestions)
+    // console.log(suggestions)
 
     const [inputValue, setInputValue] = useState("");
     const [options, setOptions] = useState<{ value: string }[]>([]);
@@ -42,14 +42,35 @@ function Sidebar() {
                     .map((item) => ({ value: item }))
                 : []
         );
+    };
 
+    const FindProduct = (title: string) => {
+        const product = stateData.data.filter((product: any) => product.title === title)
+        console.log(product)
+
+        const productElement = document.getElementById(`product-${(product[0] as { id: string }).id}`);
+        console.log(productElement)
+        if (productElement) {
+            productElement.scrollIntoView({ behavior: "smooth", block: "center" });
+            productElement.style.transition = "background-color 0.5s ease";
+            productElement.style.backgroundColor = "#FFFFCC";
+
+            setTimeout(() => {
+                productElement.style.backgroundColor = "";
+            }, 1500);
+        } else {
+            message.warning("Không tìm thấy sản phẩm!");
+        }
     }
+
+
+
     return (
         <>
             {/* <div className='w-full h-20'
 
             ></div> */}
-            <nav className='p-3 pl-20 pr-20 text-2xl bg-cyan-900 text-white  top-0 left-0 right-0 z-50 w-full shadow-xl'>
+            <nav className='p-3 pl-20 pr-20 text-2xl bg-cyan-900 text-white  top-0 left-0 right-0 z-50 w-full shadow-xl relative'>
                 <ul className='list-none flex flex-wrap justify-between items-center'>
 
                     <Link href={'/'}>
@@ -75,13 +96,15 @@ function Sidebar() {
                         <AutoComplete
                             options={options}
                             value={inputValue}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
+                            onSelect={(value) => FindProduct(value)}
                         >
-                            <Input className='w-full md:w-72' suffix={<SearchOutlined />} placeholder='Bạn muốn tìm gì?'
+                            <Input
+                                className='w-full md:w-80'
+                                suffix={<SearchOutlined />}
+                                placeholder='Bạn muốn tìm gì?'
+                            />
 
-                            >
-
-                            </Input>
 
                         </AutoComplete>
                     </li>
@@ -105,9 +128,17 @@ function Sidebar() {
                         </li>
 
                     </Link>
-                    <li><a href="#" className='text-lg flex items-center'><LoginOutlined className='mr-2' />Login/Log out</a> </li>
+                    <li>
+                        <a href="#" className='text-lg flex items-center'>
+                            <LoginOutlined className='mr-2' />
+                            Login/Log out
+                        </a>
+                    </li>
                 </ul>
+
             </nav>
+
+
 
         </>
 
