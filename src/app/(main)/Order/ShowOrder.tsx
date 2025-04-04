@@ -25,10 +25,15 @@ function ShowOrder() {
         }[];
 
     }
-    const ListOrder = JSON.parse(localStorage.getItem('orders') || '[]');
+
+    // const ListOrder = JSON.parse(localStorage.getItem('orders') || '[]');
+    const ListOrder = typeof window !== 'undefined' ? localStorage.getItem('orders') : null;
+    // typeof window !== 'undefined' ? localStorage.getItem('cartProducts') : null;
     console.log(ListOrder)
 
-
+    if (!ListOrder) {
+        return '';
+    }
 
     return (
         <>
@@ -50,7 +55,11 @@ function ShowOrder() {
                         <div className="p-2">Chi tiết</div>
                     </div>
 
-                    {[...ListOrder].reverse().map((order: order) => (
+
+
+
+
+                    {JSON.parse(ListOrder).reverse().map((order: order) => (
                         <>
                             <div className="grid grid-cols-7 border-b border-gray-200 hover:bg-gray-50 p-2">
                                 <div className="p-2">#{order.id}</div>

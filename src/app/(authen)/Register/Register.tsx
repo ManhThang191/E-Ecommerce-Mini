@@ -86,7 +86,7 @@ function Register() {
                     <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Đăng Ký Tài Khoản</h2>
                     <form action="#" method="POST">
                         <div className="mb-4">
-                            <label for="name" className="block text-sm font-medium text-gray-700">
+                            <label className="block text-sm font-medium text-gray-700">
                                 Tên đăng nhập
                             </label>
                             <input type="text" id="username" name="username" required className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
@@ -105,21 +105,21 @@ function Register() {
                         </div> */}
 
                         <div className="mb-4">
-                            <label for="email" className="block text-sm font-medium text-gray-700">
+                            <label className="block text-sm font-medium text-gray-700">
                                 Email
                             </label>
                             <input type="email" id="email" name="email" required className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                         </div>
 
                         <div className="mb-4">
-                            <label for="password" className="block text-sm font-medium text-gray-700">
+                            <label className="block text-sm font-medium text-gray-700">
                                 Mật khẩu
                             </label>
                             <input type="password" id="password" name="password" required className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                         </div>
 
                         <div className="mb-4">
-                            <label for="confirm-password" className="block text-sm font-medium text-gray-700">
+                            <label className="block text-sm font-medium text-gray-700">
                                 Xác nhận mật khẩu
                             </label>
                             <input type="password" id="confirm-password" name="confirm-password" required className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
@@ -127,7 +127,7 @@ function Register() {
 
                         <div className="mb-4 flex items-center">
                             <input type="checkbox" id="agree" name="agree" required className="h-4 w-4 text-indigo-600 border-gray-300 rounded" />
-                            <label for="agree" className="ml-2 text-sm text-gray-700">
+                            <label className="ml-2 text-sm text-gray-700">
                                 Tôi đồng ý với
                                 <a href="#" className="text-indigo-600 ml-2">
                                     Điều khoản sử dụng
@@ -136,7 +136,7 @@ function Register() {
                         </div>
 
                         <div className="flex justify-center">
-                            <Button onClick={() => (handleSubmit())} type="submit" className="!w-full !bg-indigo-600 !text-white !p-2 !rounded-md hover:!bg-indigo-700 !transition !duration-300">
+                            <Button onClick={() => (handleSubmit())} htmlType='submit' className="!w-full !bg-indigo-600 !text-white !p-2 !rounded-md hover:!bg-indigo-700 !transition !duration-300">
                                 Đăng Ký
                             </Button>
                         </div>
