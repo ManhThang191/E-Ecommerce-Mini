@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DetailPage from '@/components/DetailPage/DetailPage'
 import { useParams } from 'next/navigation';
 import { useData } from '@/app/context/DataContext';
 import { Button, Input, message } from 'antd';
+import { useAuth } from '@/app/context/Auth';
 
 
 function BuyNow() {
+    const { currentUser } = useAuth();
 
     interface product {
         id: number;
@@ -25,9 +27,9 @@ function BuyNow() {
     const products = ProductDetail.find((item: product) => item.id === parseInt(id));
     // console.log(products)
 
-    const [name, setName] = useState("")
-    const [phone, setPhone] = useState("")
-    const [address, setAddress] = useState("")
+    const [name, setName] = useState(`${currentUser?.name.firstname} ${currentUser?.name.lastname}` || '')
+    const [phone, setPhone] = useState(`${currentUser?.phone}` || '')
+    const [address, setAddress] = useState(`${currentUser?.address.number} ${currentUser?.address.street} ${currentUser?.address.city}` || '')
 
     const quantity = parseInt(localStorage.getItem(`product_${id}_quantity`) || '1');
     // console.log(typeof quantity)
@@ -73,6 +75,10 @@ function BuyNow() {
             message.error('Đặt thất bại!!')
         }
     }
+
+
+
+
     return (
         <>
             <DetailPage name={'Mua Ngay'} nameBack={'Home'} address={'BuyNow'} />
@@ -121,6 +127,7 @@ function BuyNow() {
                             className='flex-1'
                             placeholder='Nhập tên của bạn'
                             // value={"Thắng"}
+                            defaultValue={currentUser?.name.firstname + ' ' + currentUser?.name.lastname}
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
@@ -129,7 +136,7 @@ function BuyNow() {
                         <Input
                             className='flex-1'
                             placeholder='Nhập số điện thoại của bạn'
-                            // value={"0383758002"}
+                            defaultValue={currentUser?.phone}
                             onChange={(e) => setPhone(e.target.value)}
                         />
                     </div>
@@ -139,6 +146,7 @@ function BuyNow() {
                             className='flex-1'
                             placeholder='Nhập địa chỉ của bạn'
                             // value={"Quận 8, TP Hồ Chí Minh"}
+                            defaultValue={currentUser?.address.number + ', ' + currentUser?.address.street + ', ' + currentUser?.address.city}
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </div>

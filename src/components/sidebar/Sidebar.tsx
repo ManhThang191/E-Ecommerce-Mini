@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 // import 'antd' from 'antd'
-import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined, UserOutlined, CaretDownOutlined } from '@ant-design/icons'
+import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined, UserOutlined, CaretDownOutlined, LogoutOutlined } from '@ant-design/icons'
 import { AutoComplete, Input, message } from 'antd';
 import Link from "next/link";
 import { useCart } from '@/app/context/CartContext';
@@ -169,45 +169,65 @@ function Sidebar() {
                         </Link>
                     </li>
 
+                    {currentUser ? (
+                        <>
+                            <li>
 
-                    <li>
+                                <Dropdown
+                                    trigger={['click']}
+                                    overlay={
+                                        <div className='w-40 bg-white !text-black rounded-lg shadow-lg'>
+                                            <Link href={'/Profile'} className='block !text-black  px-4 py-2 hover:bg-gray-200'>
+                                                <UserOutlined className='mr-2 ' />
+                                                Tài Khoản
+                                            </Link>
 
-                        <Dropdown
-                            trigger={['hover']}
-                            overlay={
-                                <div className='w-40 bg-white text-black rounded-lg shadow-lg'>
-                                    <Link href={'/Profile'} className='block px-4 py-2 hover:bg-gray-200'>
-                                        <UserOutlined className='mr-2' />
-                                        Tài Khoản
-                                    </Link>
+                                            <Link href={'/Login'} className='block px-4 !text-red-500 py-2 hover:bg-gray-200'
+                                                onClick={() => (
+                                                    localStorage.removeItem('userLogin')
+                                                )}>
+                                                <LogoutOutlined className='mr-2' />
+                                                Đăng Xuất
+                                            </Link>
+                                        </div>
+                                    }
+                                    placement="bottomRight"
+                                    arrow
+                                >
 
-                                    <Link href={'/Login'} className='block px-4 py-2 hover:bg-gray-200'
-                                        onClick={() => (
-                                            localStorage.removeItem('userLogin')
-                                        )}>
+                                    <div className='text-lg flex items-center hover:text-amber-400'>
+                                        <CaretDownOutlined className='mr-2' />
+                                        {/* {currentUser?.username} */}
+                                        <span className='mr-1'>
+                                            {currentUser?.name.firstname}
+                                        </span>
+                                        <span >
+                                            {currentUser?.name.lastname}
+
+                                        </span>
+
+                                    </div>
+                                </Dropdown>
+
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li>
+                                <Link href={'/Login'}>
+                                    <div className='text-lg flex items-center hover:text-amber-400'>
                                         <LoginOutlined className='mr-2' />
-                                        Đăng Xuất
-                                    </Link>
-                                </div>
-                            }
-                            placement="bottomRight"
-                            arrow
-                        >
-                            <div className='text-lg flex items-center hover:text-amber-400'>
-                                <CaretDownOutlined className='mr-2' />
-                                {/* {currentUser?.username} */}
-                                <span className='mr-1'>
-                                    {currentUser?.name.firstname}
-                                </span>
-                                <span >
-                                    {currentUser?.name.lastname}
 
-                                </span>
+                                        Đăng Nhập
+                                    </div>
 
-                            </div>
-                        </Dropdown>
+                                </Link>
+                            </li>
 
-                    </li>
+                        </>
+                    )}
+
+
 
 
                     {/* <li>
