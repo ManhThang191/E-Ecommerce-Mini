@@ -18,6 +18,7 @@ const dataReducer = (stateData: StateType, action: ActionType): StateType => {
     default:
       return stateData;
   }
+
 };
 
 // Tạo Context
