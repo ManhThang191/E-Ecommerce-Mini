@@ -2,6 +2,7 @@
 import { useAuth } from '@/app/context/Auth';
 import { useUser } from '@/app/context/UserContext';
 import { Button, Input, message } from 'antd'
+import Link from 'next/link';
 import React from 'react'
 
 interface User {
@@ -105,6 +106,10 @@ function Login() {
 
 
                     </form>
+                    <div className="mt-4 text-center">
+                        <span className="text-sm">Chưa có tài khoản? </span>
+                        <Link href="/Register" className="text-blue-500 hover:underline">Đăng ký</Link>
+                    </div>
                 </div>
             </div>
 

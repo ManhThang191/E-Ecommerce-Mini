@@ -6,6 +6,7 @@ import { useCart } from '@/app/context/CartContext';
 
 
 import { Button, Input, message } from "antd";
+import { useAuth } from '@/app/context/Auth';
 
 
 
@@ -32,10 +33,10 @@ function PayCheckOut() {
         return parseFloat(priceTotal.toFixed(2));
 
     }
-
-    const [name, setName] = useState("")
-    const [phone, setPhone] = useState("")
-    const [address, setAddress] = useState("")
+    const { currentUser } = useAuth();
+    const [name, setName] = useState(`${currentUser?.name.firstname} ${currentUser?.name.lastname}` || '')
+    const [phone, setPhone] = useState(`${currentUser?.phone}` || '')
+    const [address, setAddress] = useState(`${currentUser?.address.number} ${currentUser?.address.street} ${currentUser?.address.city}` || '')
 
 
     const CheckOut = () => {
@@ -120,6 +121,7 @@ function PayCheckOut() {
                             className='flex-1'
                             placeholder='Nhập tên của bạn'
                             // value={"Thắng"}
+                            defaultValue={`${currentUser?.name.firstname} ${currentUser?.name.lastname}`}
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
@@ -129,6 +131,7 @@ function PayCheckOut() {
                             className='flex-1'
                             placeholder='Nhập số điện thoại của bạn'
                             // value={"0383758002"}
+                            defaultValue={`${currentUser?.phone}`}
                             onChange={(e) => setPhone(e.target.value)}
                         />
                     </div>
@@ -138,6 +141,7 @@ function PayCheckOut() {
                             className='flex-1'
                             placeholder='Nhập địa chỉ của bạn'
                             // value={"Quận 8, TP Hồ Chí Minh"}
+                            defaultValue={`${currentUser?.address.number} ${currentUser?.address.street} ${currentUser?.address.city}`}
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </div>
