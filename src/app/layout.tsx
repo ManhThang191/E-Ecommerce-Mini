@@ -3,6 +3,8 @@ import "./globals.css";
 import { DataProvider } from './context/DataContext'
 import { CartProvider } from "./context/CartContext";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { UserProvider } from "./context/UserContext";
+import { AuthProvider } from "./context/Auth";
 // import Login from "./Login/Login";
 
 
@@ -24,11 +26,15 @@ export default function RootLayout({
         className={`antialiased`} // Apply custom fonts and antialiasing
       >
         <AntdRegistry>
-          <DataProvider>
-            <CartProvider>
-              {children} {/* Render the children components */}
-            </CartProvider>
-          </DataProvider>
+          <UserProvider>
+            <AuthProvider>
+              <DataProvider>
+                <CartProvider>
+                  {children} {/* Render the children components */}
+                </CartProvider>
+              </DataProvider>
+            </AuthProvider>
+          </UserProvider>
         </AntdRegistry>
       </body>
     </html >

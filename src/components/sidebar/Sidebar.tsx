@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 // import 'antd' from 'antd'
-import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined, ArrowUpOutlined } from '@ant-design/icons'
+import { ShoppingCartOutlined, FileSearchOutlined, HeartOutlined, HomeOutlined, SearchOutlined, LoginOutlined, UserOutlined, CaretDownOutlined } from '@ant-design/icons'
 import { AutoComplete, Input, message } from 'antd';
 import Link from "next/link";
 import { useCart } from '@/app/context/CartContext';
-
+import { Dropdown } from "antd";
 import { useData } from '@/app/context/DataContext';
+import { useAuth } from '@/app/context/Auth';
 
 
 function Sidebar() {
@@ -89,6 +90,7 @@ function Sidebar() {
         }
     }
 
+    const { currentUser } = useAuth();
 
 
     return (
@@ -99,24 +101,32 @@ function Sidebar() {
             <nav className='p-3 pl-20 pr-20 text-2xl bg-cyan-900 text-white  top-0 left-0 right-0 z-50 w-full shadow-xl relative'>
                 <ul className='list-none flex flex-wrap justify-between items-center'>
 
-                    <Link href={'/'}>
-                        <li><div className='text-lg flex items-center hover:text-amber-400'> <HomeOutlined className='mr-2' />Home</div> </li>
-                    </Link>
+                    <li>
+                        <Link href={'/'}>
+                            <div className='text-lg flex items-center hover:text-amber-400'>
+                                <HomeOutlined className='mr-2' />
+                                Home
+                            </div>
 
-                    <Link href={'/Order'}>
-                        <li><div className='text-lg flex items-center hover:text-amber-400 relative'>
-                            <FileSearchOutlined className='mr-1' />
-                            <span>
+                        </Link>
+                    </li>
 
-                                Đơn Hàng
-                            </span>
-                            <span className='absolute bg-red-500 text-white -top-1 -right-4
+                    <li>
+                        <Link href={'/Order'}>
+                            <div className='text-lg flex items-center hover:text-amber-400 relative'>
+                                <FileSearchOutlined className='mr-1' />
+                                <span>
+
+                                    Đơn Hàng
+                                </span>
+                                <span className='absolute bg-red-500 text-white -top-1 -right-4
                                         text-xs rounded-full w-5 h-5 flex items-center justify-center'>
-                                {OrderTotal()}
-                            </span>
-                        </div> </li>
+                                    {OrderTotal()}
+                                </span>
+                            </div>
 
-                    </Link>
+                        </Link>
+                    </li>
 
                     <li className="relative flex items-center w-full md:w-auto">
                         <AutoComplete
@@ -135,12 +145,17 @@ function Sidebar() {
                         </AutoComplete>
                     </li>
 
-                    <Link href={'/ProductFav'}>
-                        <li ><div className='text-lg flex items-center hover:text-amber-400'><HeartOutlined className='mr-2' />Yêu Thích</div></li>
-                    </Link>
+                    <li >
+                        <Link href={'/ProductFav'}>
+                            <div className='text-lg flex items-center hover:text-amber-400'>
+                                <HeartOutlined className='mr-2' />
+                                Yêu Thích
+                            </div>
+                        </Link>
+                    </li>
 
-                    <Link href={'/CartProduct'}>
-                        <li>
+                    <li>
+                        <Link href={'/CartProduct'}>
                             <div className='text-lg flex items-center hover:text-amber-400 relative'>
                                 <ShoppingCartOutlined className='mr-2' />
                                 <span>
@@ -151,23 +166,63 @@ function Sidebar() {
                                     {ProductTotal()}
                                 </span>
                             </div>
-                        </li>
+                        </Link>
+                    </li>
 
-                    </Link>
+
                     <li>
-                        {/* <a href="#" className='text-lg flex items-center'>
-                            <LoginOutlined className='mr-2' />
-                            Login
-                        </a> */}
 
-                        <Link href={'/Login'}>
+                        <Dropdown
+                            trigger={['hover']}
+                            overlay={
+                                <div className='w-40 bg-white text-black rounded-lg shadow-lg'>
+                                    <Link href={'/Profile'} className='block px-4 py-2 hover:bg-gray-200'>
+                                        <UserOutlined className='mr-2' />
+                                        Tài Khoản
+                                    </Link>
+
+                                    <Link href={'/Login'} className='block px-4 py-2 hover:bg-gray-200'
+                                        onClick={() => (
+                                            localStorage.removeItem('userLogin')
+                                        )}>
+                                        <LoginOutlined className='mr-2' />
+                                        Đăng Xuất
+                                    </Link>
+                                </div>
+                            }
+                            placement="bottomRight"
+                            arrow
+                        >
+                            <div className='text-lg flex items-center hover:text-amber-400'>
+                                <CaretDownOutlined className='mr-2' />
+                                {/* {currentUser?.username} */}
+                                <span className='mr-1'>
+                                    {currentUser?.name.firstname}
+                                </span>
+                                <span >
+                                    {currentUser?.name.lastname}
+
+                                </span>
+
+                            </div>
+                        </Dropdown>
+
+                    </li>
+
+
+                    {/* <li>
+
+                        <Link href={'/Login'} onClick={() => (
+                            localStorage.removeItem('userLogin')
+                        )} >
                             <div className='text-lg flex items-center hover:text-amber-400'>
                                 <LoginOutlined className='mr-2' />
-                                Log out
+                                Đăng xuất
                             </div>
 
                         </Link>
-                    </li>
+                    </li> */}
+
                 </ul>
 
             </nav>
