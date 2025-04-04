@@ -3,7 +3,7 @@ import { useAuth } from '@/app/context/Auth';
 import { useUser } from '@/app/context/UserContext';
 import { Button, Input, message } from 'antd'
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface User {
     id: string;
@@ -26,7 +26,16 @@ function Login() {
 
     const { users } = useUser();
     // console.log(users);
-    localStorage.setItem('userList', JSON.stringify(users));
+    useEffect(() => {
+        // Kiểm tra xem localStorage đã có dữ liệu chưa
+        const existingUsers = localStorage.getItem('userList');
+        if (!existingUsers) {
+            // Nếu chưa có, lưu dữ liệu vào localStorage
+            localStorage.setItem('userList', JSON.stringify(users));
+        }
+    }, [users]);
+
+    // localStorage.setItem('userList', JSON.stringify(users));
 
     const [userName, setUsername] = React.useState<string>('');
     const [passWord, setPassword] = React.useState<string>('');
@@ -35,7 +44,8 @@ function Login() {
 
     const handleLogin = () => {
 
-        const usersJSON = localStorage.getItem('userList');
+        // const usersJSON = typeof window !==  localStorage.getItem('userList');
+        const usersJSON = typeof window !== 'undefined' ? localStorage.getItem('userList') : null;
         if (!usersJSON) {
             message.error('Không có dữ liệu người dùng!');
             return;

@@ -12,7 +12,10 @@ function ShowDetail() {
         price: number;
         image: string;
         description: string;
-        rating: number;
+        rating: {
+            rate: number;
+            count: number;
+        }
         category: string;
     }
 
@@ -45,6 +48,7 @@ function ShowDetail() {
                 category={products.category}
                 rating={products.rating || 0}
                 image={products.image || ""}
+                quantity={1}
             />
         </>
     )
