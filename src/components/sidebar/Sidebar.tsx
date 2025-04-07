@@ -28,29 +28,29 @@ function Sidebar() {
     //     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     //     return orders.length;
     // };
-    const OrderTotal = () => {
-        const [orderCount, setOrderCount] = useState(0);
+    // const OrderTotal = () => {
+    //     const [orderCount, setOrderCount] = useState(0);
 
-        useEffect(() => {
-            const updateOrderCount = () => {
-                const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-                setOrderCount(orders.length);
-            };
+    //     useEffect(() => {
+    //         const updateOrderCount = () => {
+    //             const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    //             setOrderCount(orders.length);
+    //         };
 
-            // Gọi hàm ngay khi component mount
-            updateOrderCount();
+    //         // Gọi hàm ngay khi component mount
+    //         updateOrderCount();
 
-            // Theo dõi sự thay đổi của localStorage
-            window.addEventListener('storage', updateOrderCount);
+    //         // Theo dõi sự thay đổi của localStorage
+    //         window.addEventListener('storage', updateOrderCount);
 
-            // Dọn dẹp khi component unmount
-            return () => {
-                window.removeEventListener('storage', updateOrderCount);
-            };
-        }, [orderCount]);
+    //         // Dọn dẹp khi component unmount
+    //         return () => {
+    //             window.removeEventListener('storage', updateOrderCount);
+    //         };
+    //     }, [orderCount]);
 
-        return orderCount;
-    };
+    //     return orderCount;
+    // };
 
     const { stateData } = useData()
     // console.log(stateData.data)
@@ -119,10 +119,10 @@ function Sidebar() {
 
                                     Đơn Hàng
                                 </span>
-                                <span className='absolute bg-red-500 text-white -top-1 -right-4
+                                {/* <span className='absolute bg-red-500 text-white -top-1 -right-4
                                         text-xs rounded-full w-5 h-5 flex items-center justify-center'>
                                     {OrderTotal()}
-                                </span>
+                                </span> */}
                             </div>
 
                         </Link>

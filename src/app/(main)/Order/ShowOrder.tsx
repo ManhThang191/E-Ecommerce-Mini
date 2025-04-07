@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import DetailPage from '@/components/DetailPage/DetailPage'
 import { Button } from 'antd';
 import Link from 'next/link';
@@ -27,20 +27,26 @@ function ShowOrder() {
     }
 
     // const ListOrder = JSON.parse(localStorage.getItem('orders') || '[]');
-    const ListOrder = typeof window !== 'undefined' ? localStorage.getItem('orders') : null;
+    // const ListOrder = typeof window !== 'undefined' ? localStorage.getItem('orders') : null;
     // typeof window !== 'undefined' ? localStorage.getItem('cartProducts') : null;
-    console.log(ListOrder)
 
-    if (!ListOrder) {
+    const [listOrder, setListOrder] = useState<order[] | null>(null);
+
+    useEffect(() => {
+        const storedOrders = localStorage.getItem('orders');
+        if (storedOrders) {
+            setListOrder(JSON.parse(storedOrders));
+        }
+    }, []);
+
+
+    if (!listOrder) {
         return '';
     }
 
     return (
         <>
             <DetailPage name={'Lịch Sử Đơn Hàng'} nameBack={'Home'} address={'OrderPage'} />
-
-
-
             <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-4">Danh sách đơn hàng</h1>
 
@@ -54,12 +60,7 @@ function ShowOrder() {
                         <div className="p-2">Trạng thái</div>
                         <div className="p-2">Chi tiết</div>
                     </div>
-
-
-
-
-
-                    {JSON.parse(ListOrder).reverse().map((order: order) => (
+                    {listOrder.map((order: order) => (
                         <>
                             <div className="grid grid-cols-7 border-b border-gray-200 hover:bg-gray-50 p-2">
                                 <div className="p-2">#{order.id}</div>
@@ -83,7 +84,6 @@ function ShowOrder() {
                         </>
 
                     ))}
-
 
 
                 </div>
