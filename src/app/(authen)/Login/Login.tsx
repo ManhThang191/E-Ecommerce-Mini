@@ -23,6 +23,9 @@ interface User {
 
 
 function Login() {
+    // const [namedefault, setNameDefault] = React.useState<string>('johnd');
+    // // const [emaildefault, setEmailDefault] = React.useState<string>('');
+    // const [passworddefault, setPasswordDefault] = React.useState<string>('m38rmF$');
 
     const { users } = useUser();
     // console.log(users);
@@ -37,8 +40,8 @@ function Login() {
 
     // localStorage.setItem('userList', JSON.stringify(users));
 
-    const [userName, setUsername] = React.useState<string>('');
-    const [passWord, setPassword] = React.useState<string>('');
+    const [userName, setUsername] = React.useState<string>('johnd');
+    const [passWord, setPassword] = React.useState<string>('m38rmF$');
     const { login } = useAuth();
 
 
@@ -95,12 +98,14 @@ function Login() {
                             <label className="block text-sm font-medium">Tên đăng nhập</label>
                             <Input type="text" className="w-full px-3 py-2 border rounded-lg" placeholder="Nhập tên đăng nhập" required
                                 onChange={(e) => setUsername(e.target.value)}
+                                defaultValue={userName}
                             />
                         </div>
                         <div>
                             <label className="block text-sm font-medium">Mật khẩu</label>
                             <Input type="password" className="w-full px-3 py-2 border rounded-lg" placeholder="Nhập mật khẩu" required
                                 onChange={(e) => setPassword(e.target.value)}
+                                defaultValue={passWord}
                             />
                         </div>
                         {/* <p className="text-red-500 text-sm hidden">Vui lòng nhập đầy đủ thông tin!</p> */}
