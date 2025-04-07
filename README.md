@@ -1,3 +1,5 @@
+!! this code on repo if y download and deploy by web vercel. It won't works, bc it don't match at version. You need to install and change to "@types/react: 18.3.5" in pakage.json so it can deploy 
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
