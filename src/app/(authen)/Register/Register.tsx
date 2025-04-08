@@ -1,8 +1,9 @@
 "use client";
 import { Button, message } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 // import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 
 interface User {
     id: string;
@@ -27,96 +28,96 @@ interface User {
 
 function Register() {
 
-    // const router = useRouter();
+    const router = useRouter();
 
-    // const handleRegister = () => {
-    //     const username = (document.getElementById('username') as HTMLInputElement).value;
-    //     const email = (document.getElementById('email') as HTMLInputElement).value;
-    //     const password = (document.getElementById('password') as HTMLInputElement).value;
-    //     const confirmPassword = (document.getElementById('confirm-password') as HTMLInputElement).value;
+    const handleRegister = () => {
+        const username = (document.getElementById('username') as HTMLInputElement).value;
+        const email = (document.getElementById('email') as HTMLInputElement).value;
+        const password = (document.getElementById('password') as HTMLInputElement).value;
+        const confirmPassword = (document.getElementById('confirm-password') as HTMLInputElement).value;
 
-    //     if (password !== confirmPassword) {
-    //         // alert('Mật khẩu không khớp!');
-    //         message.error('Mật khẩu không khớp!');
-    //         return;
-    //     }
+        if (password !== confirmPassword) {
+            // alert('Mật khẩu không khớp!');
+            message.error('Mật khẩu không khớp!');
+            return;
+        }
 
-    //     const newUser: User = {
-    //         id: Date.now().toString(),
-    //         name: {
-    //             firstname: '',
-    //             lastname: ''
-    //         },
-    //         email,
-    //         password,
-    //         phone: '',
-    //         address: {
-    //             city: '',
-    //             street: '',
-    //             number: '',
-    //             zipCode: ''
-    //         },
-    //         image: '',
-    //         username,
-    //     };
+        const newUser: User = {
+            id: Date.now().toString(),
+            name: {
+                firstname: '',
+                lastname: ''
+            },
+            email,
+            password,
+            phone: '',
+            address: {
+                city: '',
+                street: '',
+                number: '',
+                zipCode: ''
+            },
+            image: '',
+            username,
+        };
 
-    //     // Lưu thông tin người dùng vào localStorage
-    //     const usersJSON = localStorage.getItem('userList');
-    //     let usersData: User[] = [];
-    //     if (usersJSON) {
-    //         usersData = JSON.parse(usersJSON);
-    //     }
-    //     usersData.push(newUser);
-    //     localStorage.setItem('userList', JSON.stringify(usersData));
+        // Lưu thông tin người dùng vào localStorage
+        const usersJSON = localStorage.getItem('userList');
+        let usersData: User[] = [];
+        if (usersJSON) {
+            usersData = JSON.parse(usersJSON);
+        }
+        usersData.push(newUser);
+        localStorage.setItem('userList', JSON.stringify(usersData));
 
-    //     // alert('Đăng ký thành công!');
-    // }
-    // const handleSubmit = () => {
-    //     // event.preventDefault(); // Ngăn chặn hành vi mặc định của form
-    //     // Gọi hàm đăng ký
-    //     handleRegister();
-    //     message.success('Đăng ký thành công!');
-    //     // window.location.href = '/Login';
-    //     router.push('/Login');
+        // alert('Đăng ký thành công!');
+    }
+    const handleSubmit = () => {
+        // event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+        // Gọi hàm đăng ký
+        handleRegister();
+        message.success('Đăng ký thành công!');
+        // window.location.href = '/Login';
+        router.push('/Login');
 
+    };
+
+    // const [form, setForm] = useState({
+    //     username: "",
+    //     email: "",
+    //     password: "",
+    // });
+
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setForm({ ...form, [e.target.name]: e.target.value });
     // };
 
-    const [form, setForm] = useState({
-        username: "",
-        email: "",
-        password: "",
-    });
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     try {
+    //         const response = await fetch("https://fakestoreapi.com/users", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(form),
+    //         });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
+    //         const data = await response.json();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const response = await fetch("https://fakestoreapi.com/users", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(form),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                message.success("Đăng ký thành công! 🎉");
-                console.log("Server response:", data);
-                // Optional: redirect, lưu localStorage, v.v.
-            } else {
-                message.error("Đăng ký thất bại.");
-                console.error("Lỗi:", data);
-            }
-        } catch (error) {
-            console.error("Lỗi kết nối:", error);
-            message.error("Đã xảy ra lỗi khi kết nối đến server.");
-        }
-    };
+    //         if (response.ok) {
+    //             message.success("Đăng ký thành công! 🎉");
+    //             console.log("Server response:", data);
+    //             // Optional: redirect, lưu localStorage, v.v.
+    //         } else {
+    //             message.error("Đăng ký thất bại.");
+    //             console.error("Lỗi:", data);
+    //         }
+    //     } catch (error) {
+    //         console.error("Lỗi kết nối:", error);
+    //         message.error("Đã xảy ra lỗi khi kết nối đến server.");
+    //     }
+    // };
     return (
         <>
             <div className="bg-gray-100 h-screen flex items-center justify-center">
@@ -147,14 +148,18 @@ function Register() {
                             <label className="block text-sm font-medium text-gray-700">
                                 Email
                             </label>
-                            <input onChange={(e) => (handleChange(e))} type="email" id="email" name="email" required className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                            <input
+                                // onChange={(e) => (handleChange(e))}
+                                type="email" id="email" name="email" required className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                         </div>
 
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700">
                                 Mật khẩu
                             </label>
-                            <input onChange={(e) => (handleChange(e))} type="password" id="password" name="password" required className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                            <input
+                                // onChange={(e) => (handleChange(e))} 
+                                type="password" id="password" name="password" required className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                         </div>
 
                         <div className="mb-4">
@@ -175,7 +180,9 @@ function Register() {
                         </div>
 
                         <div className="flex justify-center">
-                            <Button onClick={(e) => (handleSubmit(e))} htmlType='submit' className="!w-full !bg-indigo-600 !text-white !p-2 !rounded-md hover:!bg-indigo-700 !transition !duration-300">
+                            <Button
+                                onClick={() => (handleSubmit())}
+                                htmlType='submit' className="!w-full !bg-indigo-600 !text-white !p-2 !rounded-md hover:!bg-indigo-700 !transition !duration-300">
                                 Đăng Ký
                             </Button>
                         </div>
