@@ -1,7 +1,7 @@
 "use client";
 import { Button, message } from 'antd';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 // import { useRouter } from 'next/navigation';
 // import React, { useState } from 'react';
 
@@ -26,7 +26,9 @@ interface User {
 
 
 
+
 function Register() {
+
 
     const router = useRouter();
 

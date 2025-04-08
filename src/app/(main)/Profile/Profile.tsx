@@ -10,6 +10,7 @@ function Profile() {
     if (!currentUser) {
         return <div className="text-center mt-20">Vui lòng đăng nhập để xem thông tin tài khoản.</div>;
     }
+
     return (
         <>
             <div className="bg-white shadow-xl h-auto rounded-2xl p-6 max-w-md w-full space-y-4 m-auto mt-20">

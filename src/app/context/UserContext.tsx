@@ -20,6 +20,11 @@ interface User {
     // thêm các thuộc tính khác nếu cần
 }
 
+interface RegisterAction {
+    type: 'ADD_USER';
+    payload: User;
+}
+
 interface UserContextType {
     users: User[] | null;
     setUsers: React.Dispatch<React.SetStateAction<User[]>>;
