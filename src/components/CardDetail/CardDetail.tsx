@@ -70,13 +70,13 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
     return (
 
         <>
-            <DetailPage name={'Chi Tiết Sản Phẩm'} nameBack={'Home'} address={'Detail'}>
+            <DetailPage name={'Chi Tiết Sản Phẩm'} nameBack={'Home'} address={'Detail'} />
 
-            </DetailPage>
-            <div className='m-auto w-250 h-130 flex text-center rounded-xl border-0 overflow-hidden shadow-lg'
+            {/* <div className='m-auto w-250 h-130 flex text-center rounded-xl border-0 overflow-hidden shadow-lg' > */}
+            <div className='m-auto w-full max-w-[1000px] h-auto flex mt-20 flex-col md:flex-row text-center rounded-xl border-0 overflow-hidden shadow-lg'>
 
-            >
-                <div className='flex-1 w-full h-full relative'>
+                {/* <div className='flex-1 w-full h-full relative'> */}
+                <div className='w-full md:w-1/2 h-64 md:h-auto relative'>
                     <Image
                         src={image || ""}
                         alt={title}
@@ -86,7 +86,9 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                         className=' p-2'
                     />
                 </div>
-                <div className='flex-1 flex-col w-full h-full '>
+                {/* <div className='flex-1 flex-col w-full h-full '> */}
+                <div className='w-full md:w-1/2 flex flex-col'>
+
                     <div className=' flex items-center justify-center p-5 text-xl bg-cyan-800 text-amber-50' style={{ height: '20%' }}>{title}</div>
                     <div className=' flex items-center justify-around text-3xl text-red-700' style={{ height: '20%' }}>
                         <div className=''>
@@ -111,7 +113,12 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
                         </div>
 
                     </div>
-                    <div className=' flex items-center justify-center' style={{ height: '25%' }}>
+
+
+                    {/* <div className=' flex items-center justify-center' style={{ height: '25%' }}> */}
+                    <div className='flex flex-col md:flex-row items-center justify-center gap-3 px-4 py-4'>
+
+
                         <div className='scale-150 w-40 mr-5'>
                             <Button className={`scale-70 ${quantity <= 1 ? '!cursor-not-allowed !text-gray-400 !border-none' : 'hover:!text-black hover:!border-black'}`}
                                 onClick={() => {
@@ -151,16 +158,10 @@ function CardDetail({ id, title, price, image, description, category, rating: { 
 
                             />
                         </Button>
-
-                        {/* <Button className='flex-1 m-3 p-6 !text-pink-600 hover:!text-white
-                                     hover:!bg-pink-600 hover:!border-none
-                                     hover:transform hover:scale-105 text-lg !h-15'>
-                            <HeartOutlined className='text-2xl ' />
-                        </Button> */}
                     </div>
                 </div>
-
             </div>
+
 
         </>
 
